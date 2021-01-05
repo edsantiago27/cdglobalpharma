@@ -28,8 +28,8 @@ class Provider extends InheritedWidget {
   }
 
 //*************************************************** */
-
-  static String url = 'http://192.168.0.5:80';
+  static String url = 'http://192.168.0.111:8183';
+  //static String url = 'http://192.168.0.5:80';
   static final listUrl = '$url/api/lgpersons';
 
   // METODO PARA MOSTRAR LSTADO DE LGPERSONS
