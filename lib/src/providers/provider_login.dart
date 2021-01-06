@@ -36,7 +36,7 @@ class Provider extends InheritedWidget {
   static final listUrl = '$url/api/lgpersons';
 
   // METODO PARA MOSTRAR LSTADO DE LGPERSONS
-  static Future list           User() async {
+  static Future listUser() async {
     return await http.get(listUrl);
   }
 
@@ -49,7 +49,7 @@ class Provider extends InheritedWidget {
 
 //************************PEDIDO ASIGNADOS************************** */
   static final pedidosUrl = '$url/api/pedidoasignado';
-  
+
   static Future listPedidos() async {
     return await http.get(pedidosUrl);
   }
