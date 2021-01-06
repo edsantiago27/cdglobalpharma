@@ -1,5 +1,6 @@
 import 'package:cdglobalpharma/src/pages/home_page.dart';
 import 'package:cdglobalpharma/src/pages/login_page.dart';
+import 'package:cdglobalpharma/src/pages/picking_pages.dart';
 import 'package:flutter/material.dart';
 
 import 'pages/splashscreen.dart';
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
           'login': (BuildContext context) => LoginPage(),
           'home': (BuildContext context) => HomePage(),
           'detail_user': (BuildContext context) => UserDetailPage(),
+          'picking_page': (BuildContext context) => Picking(),
         },
       ),
     );

@@ -1,10 +1,8 @@
 import 'dart:convert';
-
 import 'package:cdglobalpharma/src/models/model_lgperson.dart';
 import 'package:cdglobalpharma/src/providers/provider_login.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-
 class Lgperson extends StatefulWidget {
   //Lgperson({Key key}) : super(key: key);
   final lgpersonProvider = new Provider();
