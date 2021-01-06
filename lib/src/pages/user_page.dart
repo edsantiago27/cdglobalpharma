@@ -35,7 +35,7 @@ class _LgpersonState extends State<Lgperson> {
       lgperson = userData;
     }
     getUser();
-    final bloc = Provider.of(context);
+    //final bloc = Provider.of(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Listado de Operadores'),

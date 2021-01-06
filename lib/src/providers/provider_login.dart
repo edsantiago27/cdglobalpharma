@@ -6,6 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class Provider extends InheritedWidget {
+  static String url = 'http://192.168.0.111:8183';
+  //static String url = 'http://192.168.0.5:80';
+
+  //************************************************** */
   static Provider _instancia;
   factory Provider({Key key, Widget child}) {
     if (_instancia == null) {
@@ -27,9 +31,8 @@ class Provider extends InheritedWidget {
     return context.dependOnInheritedWidgetOfExactType<Provider>().loginBloc;
   }
 
-//*************************************************** */
-  static String url = 'http://192.168.0.111:8183';
-  //static String url = 'http://192.168.0.5:80';
+//*************************LGPERSON***************************** */
+
   static final listUrl = '$url/api/lgpersons';
 
   // METODO PARA MOSTRAR LSTADO DE LGPERSONS
@@ -43,4 +46,11 @@ class Provider extends InheritedWidget {
     final decodeData = json.decode(resp.body);
     return true;
   }
+
+//************************PEDIDO ASIGNADOS************************** */
+  static final pedidosUrl = '$url/api/pedidoasignado';
+  static Future listPedidos() async {
+    return await http.get(pedidosUrl);
+  }
+  //****************************************************************** */
 }

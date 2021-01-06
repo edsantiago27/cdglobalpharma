@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:cdglobalpharma/src/providers/provider_login.dart';
 import 'package:flutter/material.dart';
 
+import 'pedidos_page.dart';
 import 'user_page.dart';
 
 class HomePage extends StatelessWidget {
@@ -56,6 +57,14 @@ class Menu extends StatelessWidget {
             onTap: () {
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context) => Lgperson()));
+            },
+          ),
+          new ListTile(
+            title: Text('Pedidos Asignados'),
+            leading: Icon(Icons.check_box),
+            onTap: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => PedidosAsignados()));
             },
           ),
         ],
