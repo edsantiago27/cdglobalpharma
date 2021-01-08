@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:html';
 
 import 'package:cdglobalpharma/src/bloc/login_bloc.dart';
 import 'package:cdglobalpharma/src/models/model_lgperson.dart';
@@ -51,7 +50,7 @@ class Provider extends InheritedWidget {
   }
 
 //************************PEDIDO ASIGNADOS************************** */
-  static final pedidosUrl = '$url/api/pedidoasignado';
+  static final pedidosUrl = '$url/api/pedidosasignadoes';
 
   static Future listPedidos() async {
     return await http.get(pedidosUrl);
@@ -59,7 +58,8 @@ class Provider extends InheritedWidget {
 
   static Future<bool> editPedidosA(
       PedidosAsignadosModel pedidosAsignadosModel) async {
-    final urleditpa = '$url/api/pedidoasignado/${pedidosAsignadosModel.codPer}';
+    final urleditpa =
+        '$url/api/pedidosasignadoes/${pedidosAsignadosModel.codPer}';
     final resp = await http.put(urleditpa,
         body: pedidosAsignadosToJson(pedidosAsignadosModel));
     final decodepaData = json.decode(resp.body);

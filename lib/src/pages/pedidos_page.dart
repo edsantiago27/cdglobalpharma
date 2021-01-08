@@ -56,6 +56,7 @@ class _PedidosAsignadosState extends State<PedidosAsignados> {
               leading: new Icon(Icons.person),
               trailing: Icon(Icons.check_box),
               title: Text('0136' + '    ' + 'JOSE GARCIA'),
+              //title: Text(paList[index].codPer),
               subtitle: Text('Folio: ' +
                   '0000692797' +
                   '    ' +
