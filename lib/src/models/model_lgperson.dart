@@ -13,6 +13,7 @@ class LgpersonModel {
     this.rev,
     this.trans,
     this.usuario,
+    this.upass,
   });
 
   String codPer;
@@ -21,6 +22,7 @@ class LgpersonModel {
   String rev;
   String trans;
   String usuario;
+  String upass;
 
   factory LgpersonModel.fromJson(Map<String, dynamic> json) => LgpersonModel(
         codPer: json["codPer"],
@@ -29,6 +31,7 @@ class LgpersonModel {
         rev: json["rev"],
         trans: json["trans"],
         usuario: json["usuario"],
+        upass: json["upass"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -38,5 +41,6 @@ class LgpersonModel {
         "rev": rev,
         "trans": trans,
         "usuario": usuario,
+        "upass": upass,
       };
 }

@@ -12,7 +12,7 @@ class PedidosAsignados extends StatefulWidget {
 }
 
 class _PedidosAsignadosState extends State<PedidosAsignados> {
-  List<PedidosAsignadosModel> paList;
+  List<PedidosAsignadosModel> pedidos;
   getPedidoAsignado() {
     Provider.listPedidos().then((response) {
       Iterable list = json.decode(response.body);
@@ -20,43 +20,44 @@ class _PedidosAsignadosState extends State<PedidosAsignados> {
       pedidosList =
           list.map((model) => PedidosAsignadosModel.fromJson(model)).toList();
       setState(() {
-        paList = pedidosList;
+        pedidos = pedidosList;
       });
     });
   }
 
   final pedidosProvider = new Provider();
-  PedidosAsignadosModel pedidoasignado = new PedidosAsignadosModel();
+  PedidosAsignadosModel pedidosAsignados = new PedidosAsignadosModel();
 
   @override
   Widget build(BuildContext context) {
-    PedidosAsignadosModel paData = ModalRoute.of(context).settings.arguments;
-    if (pedidoasignado != null) {
-      pedidoasignado = paData;
+    PedidosAsignadosModel pedidosData =
+        ModalRoute.of(context).settings.arguments;
+    if (pedidosAsignados != null) {
+      pedidosAsignados = pedidosData;
     }
     getPedidoAsignado();
     return Scaffold(
       appBar: AppBar(
         title: Text('Pedidos Asignados'),
       ),
-      body: paList == null
+      body: pedidos == null
           ? Center(child: CircularProgressIndicator())
           : _builPedidosList(),
+      floatingActionButton: _btnPicking(context),
     );
   }
 
   Widget _builPedidosList() {
     return ListView.builder(
-        itemCount: paList.length,
+        itemCount: pedidos.length,
         itemBuilder: (context, index) {
           return Card(
             color: Colors.amberAccent,
             elevation: 3.0,
             child: ListTile(
-              leading: new Icon(Icons.person),
               trailing: Icon(Icons.check_box),
-              title: Text('0136' + '    ' + 'JOSE GARCIA'),
-              //title: Text(paList[index].codPer),
+              //title: Text('0136' + '    ' + 'JOSE GARCIA'),
+              title: Text('Nombre: '),
               subtitle: Text('Folio: ' +
                   '0000692797' +
                   '    ' +
@@ -70,11 +71,20 @@ class _PedidosAsignadosState extends State<PedidosAsignados> {
                   '    ' +
                   'Total Lin: ' +
                   '2'),
+              leading: new Icon(Icons.person),
               onTap: () {
-                Navigator.pushReplacementNamed(context, 'picking_page');
+                Navigator.pushNamed(context, 'picking_page',
+                    arguments: pedidosAsignados);
               },
             ),
           );
         });
+  }
+
+  Widget _btnPicking(BuildContext context) {
+    return FloatingActionButton(
+        child: Icon(Icons.add),
+        backgroundColor: Colors.blueAccent,
+        onPressed: () {});
   }
 }

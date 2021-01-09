@@ -33,10 +33,9 @@ class _LgpersonState extends State<Lgperson> {
       lgperson = userData;
     }
     getUser();
-    //final bloc = Provider.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Listado de Operadores'),
+        title: Text('Pagina de Usuarios'),
       ),
       body: user == null
           ? Center(child: CircularProgressIndicator())
@@ -55,8 +54,15 @@ class _LgpersonState extends State<Lgperson> {
             child: ListTile(
               trailing: Icon(Icons.more_vert),
               isThreeLine: false,
-              title: Text(user[index].desPer),
-              subtitle: Text(user[index].codPer),
+              title: Text('Nombre:  ' + user[index].desPer),
+              subtitle: Text('Prep: ' +
+                  user[index].prep +
+                  '  ' +
+                  'Rev: ' +
+                  user[index].rev +
+                  ' ' +
+                  'Transp: ' +
+                  user[index].trans),
               leading: new Icon(Icons.person),
               onTap: () {
                 Navigator.pushNamed(context, 'detail_user',

@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final pedidosAsignados = pedidosAsignadosFromJson(jsonString);
-
 import 'dart:convert';
 
 PedidosAsignadosModel pedidosAsignadosFromJson(String str) =>
@@ -41,7 +37,7 @@ class PedidosAsignadosModel {
       PedidosAsignadosModel(
         folio: json["FOLIO"],
         total: json["Total"],
-        lineas: json["Líneas"],
+        lineas: json["Lineas"],
         status: json["Status"],
         codPer: json["Cod_Per"],
         numPed: json["NumPed"],
@@ -55,7 +51,7 @@ class PedidosAsignadosModel {
   Map<String, dynamic> toJson() => {
         "FOLIO": folio,
         "Total": total,
-        "Líneas": lineas,
+        "Lineas": lineas,
         "Status": status,
         "Cod_Per": codPer,
         "NumPed": numPed,

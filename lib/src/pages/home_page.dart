@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:cdglobalpharma/src/pages/test_page.dart';
 import 'package:cdglobalpharma/src/providers/provider_login.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +19,7 @@ class HomePage extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[Text('Usuario # ${bloc.codPer}')],
+        children: <Widget>[Text('Usuario:  ${bloc.usuario}')],
       ),
     );
   }
@@ -33,17 +34,17 @@ class Menu extends StatelessWidget {
         children: <Widget>[
           new UserAccountsDrawerHeader(
             accountName: Text(
-              "Código: ${bloc.codPer}",
+              "Usuario: ${bloc.usuario}",
               style: TextStyle(
                 color: Colors.blueAccent,
               ),
             ),
-            accountEmail: Text(
-              "Usuario: ${bloc.codPer}",
-              style: TextStyle(
-                color: Colors.blueAccent,
-              ),
-            ),
+            // accountEmail: Text(
+            //   "Usuario: ${bloc.usuario}",
+            //   style: TextStyle(
+            //     color: Colors.blueAccent,
+            //   ),
+            // ),
             currentAccountPicture: CircleAvatar(
               backgroundColor: Colors.white,
             ),
@@ -65,6 +66,14 @@ class Menu extends StatelessWidget {
             onTap: () {
               Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => PedidosAsignados()));
+            },
+          ),
+          new ListTile(
+            title: Text('Pedidos Asignados'),
+            leading: Icon(Icons.check_box),
+            onTap: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => TestPage()));
             },
           ),
         ],

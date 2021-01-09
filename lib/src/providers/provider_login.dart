@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+export 'package:cdglobalpharma/src/bloc/login_bloc.dart';
 import 'package:cdglobalpharma/src/bloc/login_bloc.dart';
 import 'package:cdglobalpharma/src/models/model_lgperson.dart';
 import 'package:cdglobalpharma/src/models/model_ped_asigna.dart';
@@ -57,11 +57,10 @@ class Provider extends InheritedWidget {
   }
 
   static Future<bool> editPedidosA(
-      PedidosAsignadosModel pedidosAsignadosModel) async {
-    final urleditpa =
-        '$url/api/pedidosasignadoes/${pedidosAsignadosModel.codPer}';
+      PedidosAsignadosModel pedidosAsignados) async {
+    final urleditpa = '$url/api/pedidosasignadoes/${pedidosAsignados.codPer}';
     final resp = await http.put(urleditpa,
-        body: pedidosAsignadosToJson(pedidosAsignadosModel));
+        body: pedidosAsignadosToJson(pedidosAsignados));
     final decodepaData = json.decode(resp.body);
     return true;
   }

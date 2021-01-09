@@ -115,7 +115,9 @@ class LoginPage extends StatelessWidget {
                   style: TextStyle(fontSize: 20.0),
                 ),
                 SizedBox(height: 30.0),
-                _txtCodPer(bloc),
+                _txtUsuario(bloc),
+                SizedBox(height: 30.0),
+                _txtUiPass(bloc),
                 SizedBox(height: 30.0),
                 _btnLogin(bloc),
               ],
@@ -130,21 +132,45 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  Widget _txtCodPer(LoginBloc bloc) {
+  Widget _txtUsuario(LoginBloc bloc) {
     return StreamBuilder(
-      stream: bloc.codPerStream,
+        stream: bloc.usuarioStream,
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          return Container(
+            padding: EdgeInsets.symmetric(horizontal: 20.0),
+            child: TextField(
+              keyboardType: TextInputType.text,
+              decoration: InputDecoration(
+                  icon: Icon(
+                    Icons.people,
+                    color: Colors.amber,
+                  ),
+                  hintText: 'Usuario',
+                  labelText: 'Usuario',
+                  counterText: snapshot.data,
+                  errorText: snapshot.error),
+              onChanged: bloc.changeUsuario,
+            ),
+          );
+        });
+  }
+
+  Widget _txtUiPass(LoginBloc bloc) {
+    return StreamBuilder(
+      stream: bloc.passwordStream,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         return Container(
           padding: EdgeInsets.symmetric(horizontal: 20.0),
           child: TextField(
-            keyboardType: TextInputType.number,
+            keyboardType: TextInputType.visiblePassword,
+            obscureText: true,
             decoration: InputDecoration(
-                icon: Icon(Icons.verified_user, color: Colors.amber),
-                hintText: 'Código de Operador',
-                labelText: 'Código Operador',
+                icon: Icon(Icons.lock_outlined, color: Colors.amber),
+                hintText: 'Password de Operador',
+                labelText: 'Password Operador',
                 counterText: snapshot.data,
                 errorText: snapshot.error),
-            onChanged: bloc.changeCodPer,
+            onChanged: bloc.changePassword,
           ),
         );
       },
@@ -153,7 +179,7 @@ class LoginPage extends StatelessWidget {
 
   Widget _btnLogin(LoginBloc bloc) {
     return StreamBuilder(
-      stream: bloc.codPerStream,
+      stream: bloc.formValidStream,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         return RaisedButton(
           child: Container(
