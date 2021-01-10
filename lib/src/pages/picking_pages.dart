@@ -1,43 +1,87 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
 
-class Picking extends StatefulWidget {
-  Picking({Key key}) : super(key: key);
+import 'package:cdglobalpharma/src/models/model_picking.dart';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+class ListPickingPage extends StatefulWidget {
+  // ListPickingPage({Key key}) : super(key: key);
 
   @override
-  _PickingState createState() => _PickingState();
+  _ListPickingPageState createState() => _ListPickingPageState();
 }
 
-class _PickingState extends State<Picking> {
-  var folio = TextEditingController();
-  var items = TextEditingController();
-  var ubicacion = TextEditingController();
-  var lotes = TextEditingController();
-  var codigo = TextEditingController();
-  var total = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
-  final scaffoldKey = GlobalKey<ScaffoldState>();
+class _ListPickingPageState extends State<ListPickingPage> {
+  List<PickingModel> data = List<PickingModel>();
+
+  Future<List<PickingModel>> verPiking() async {
+    var url = 'http://192.168.0.5/api/pickings';
+    var registros = List<PickingModel>();
+    var response = await http.get(url).timeout(Duration(seconds: 90));
+    if (response.statusCode == 200) {
+      var datos = jsonDecode(response.body);
+      for (datos in datos) {
+        registros.add(PickingModel.fromJson(datos));
+      }
+    }
+    return registros;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    verPiking().then((value) {
+      setState(() {
+        data.addAll(value);
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: scaffoldKey,
       appBar: AppBar(
-        title: Text('Picking'),
+        title: Text('Listado de Picking'),
       ),
-      body: _buildformPicking(),
+      body: ListView.builder(
+        itemCount: data.length + 1,
+        itemBuilder: (BuildContext context, int index) {
+          return index == 0 ? _searchBar() : _listaPicking(index - 1);
+        },
+      ),
     );
   }
 
-  Widget _buildformPicking() {
-    return SingleChildScrollView(
-      child: Container(
-        padding: EdgeInsets.all(20.0),
-        child: Form(key: _formKey, child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children:<Widget> [
-            
-          ],
-        )),
+  Widget _listaPicking(index) {
+    return Card(
+      color: Colors.amberAccent,
+      elevation: 3.0,
+      child: ListTile(
+        title: Text('Folio: ' + data[index].folio.toString()),
+        subtitle: Text('Pedido#  ' +
+            data[index].numPed +
+            ' ' +
+            'Fecha: ' +
+            data[index].fecha.toIso8601String() + ' '+ ''),
+        onTap: () {},
+      ),
+    );
+  }
+
+  Widget _searchBar() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: TextField(
+        decoration: InputDecoration(hintText: 'Buscar por folio...'),
+        onChanged: (text) {
+          text = text.toLowerCase();
+          setState(() {
+            data = data.where((registros) {
+              var noteTitle = registros.folio.toLowerCase();
+              return noteTitle.contains(text);
+            }).toList();
+          });
+        },
       ),
     );
   }

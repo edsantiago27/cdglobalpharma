@@ -60,7 +60,7 @@ class Provider extends InheritedWidget {
       PedidosAsignadosModel pedidosAsignados) async {
     final urleditpa = '$url/api/pedidosasignadoes/${pedidosAsignados.codPer}';
     final resp = await http.put(urleditpa,
-        body: pedidosAsignadosToJson(pedidosAsignados));
+        body: pedidosAsignadosModelToJson(pedidosAsignados));
     final decodepaData = json.decode(resp.body);
     return true;
   }

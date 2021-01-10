@@ -1,16 +1,20 @@
+// To parse this JSON data, do
+//
+//     final pedidosAsignadosModel = pedidosAsignadosModelFromJson(jsonString);
+
 import 'dart:convert';
 
-PedidosAsignadosModel pedidosAsignadosFromJson(String str) =>
+PedidosAsignadosModel pedidosAsignadosModelFromJson(String str) =>
     PedidosAsignadosModel.fromJson(json.decode(str));
 
-String pedidosAsignadosToJson(PedidosAsignadosModel data) =>
+String pedidosAsignadosModelToJson(PedidosAsignadosModel data) =>
     json.encode(data.toJson());
 
 class PedidosAsignadosModel {
   PedidosAsignadosModel({
     this.folio,
     this.total,
-    this.lineas,
+    this.lneas,
     this.status,
     this.codPer,
     this.numPed,
@@ -18,47 +22,47 @@ class PedidosAsignadosModel {
     this.fecha,
     this.desPer,
     this.bodega,
-    this.fAsign,
+    //this.fasign,
   });
 
   String folio;
-  String total;
-  String lineas;
+  int total;
+  int lneas;
   String status;
   String codPer;
   String numPed;
   String area;
-  String fecha;
+  DateTime fecha;
   String desPer;
   String bodega;
-  String fAsign;
+  //dynamic fasign;
 
   factory PedidosAsignadosModel.fromJson(Map<String, dynamic> json) =>
       PedidosAsignadosModel(
-        folio: json["FOLIO"],
-        total: json["Total"],
-        lineas: json["Lineas"],
-        status: json["Status"],
-        codPer: json["Cod_Per"],
-        numPed: json["NumPed"],
-        area: json["Area"],
-        fecha: json["Fecha"],
-        desPer: json["Des_Per"],
-        bodega: json["BODEGA"],
-        fAsign: json["FAsign"],
+        folio: json["folio"],
+        total: json["total"],
+        lneas: json["líneas"],
+        status: json["status"],
+        codPer: json["codPer"],
+        numPed: json["numPed"],
+        area: json["area"],
+        fecha: DateTime.parse(json["fecha"]),
+        desPer: json["desPer"],
+        bodega: json["bodega"],
+        //fasign: json["fasign"],
       );
 
   Map<String, dynamic> toJson() => {
-        "FOLIO": folio,
-        "Total": total,
-        "Lineas": lineas,
-        "Status": status,
-        "Cod_Per": codPer,
-        "NumPed": numPed,
-        "Area": area,
-        "Fecha": fecha,
-        "Des_Per": desPer,
-        "BODEGA": bodega,
-        "FAsign": fAsign,
+        "folio": folio,
+        "total": total,
+        "líneas": lneas,
+        "status": status,
+        "codPer": codPer,
+        "numPed": numPed,
+        "area": area,
+        "fecha": fecha.toIso8601String(),
+        "desPer": desPer,
+        "bodega": bodega,
+        //"fasign": fasign,
       };
 }

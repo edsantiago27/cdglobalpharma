@@ -4,27 +4,30 @@ import 'package:cdglobalpharma/src/models/model_ped_asigna.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class TestPage extends StatefulWidget {
+class PedidosAsignados extends StatefulWidget {
   @override
-  _TestPageState createState() => _TestPageState();
+  _PedidosAsignadosState createState() => _PedidosAsignadosState();
 }
 
-class _TestPageState extends State<TestPage> {
+class _PedidosAsignadosState extends State<PedidosAsignados> {
   List<PedidosAsignadosModel> data = List<PedidosAsignadosModel>();
+
   Future<List<PedidosAsignadosModel>> tomar_pedido() async {
     var url = 'http://192.168.0.5/api/pedidosasignadoes';
-    var response = await http.post(url).timeout(Duration(seconds: 90));
-    var datos = jsonDecode(response.body);
     var registros = List<PedidosAsignadosModel>();
-    for (datos in datos) {
-      registros.add(PedidosAsignadosModel.fromJson(datos));
+    var response = await http.get(url).timeout(Duration(seconds: 90));
+    if (response.statusCode == 200) {
+      var datos = jsonDecode(response.body);
+      for (datos in datos) {
+        registros.add(PedidosAsignadosModel.fromJson(datos));
+      }
     }
+
     return registros;
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     tomar_pedido().then((value) {
       setState(() {
@@ -37,23 +40,63 @@ class _TestPageState extends State<TestPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('TestPage'),
+          //title: Text('Pedidos Asignados'),
+
+          ),
+      body: ListView.builder(
+          itemCount: data.length + 1,
+          itemBuilder: (BuildContext context, int index) {
+            return index == 0 ? _searchBar() : _buildListaPedidos(index - 1);
+          }),
+    );
+  }
+
+  Widget _buildListaPedidos(index) {
+    return Card(
+      color: Colors.amberAccent,
+      elevation: 3.0,
+      child: ListTile(
+        trailing: Icon(Icons.check),
+        //title: Text('0136' + '    ' + 'JOSE GARCIA'),
+        title: Text('Nombre: ' + data[index].desPer),
+        subtitle: Text('Folio: ' +
+            data[index].folio +
+            '    ' +
+            'NumPedido: ' +
+            data[index].numPed +
+            '    ' +
+            'Bodega: ' +
+            data[index].bodega +
+            '    ' +
+            data[index].status +
+            '    ' +
+            'Total Lin: ' +
+            data[index].lneas.toString()),
+        leading: new Icon(Icons.assignment_ind),
+        onTap: () {
+          Navigator.pushNamed(
+            context,
+            'picking_page',
+          );
+        },
       ),
-      body: Column(
-        children: [
-          Expanded(
-              child: ListView.builder(
-            itemCount: data.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Container(
-                color: Colors.amberAccent,
-                child: ListTile(
-                  title: Text(data[index].folio),
-                ),
-              );
-            },
-          ))
-        ],
+    );
+  }
+
+  Widget _searchBar() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: TextField(
+        decoration: InputDecoration(hintText: 'Buscar por folio...'),
+        onChanged: (text) {
+          text = text.toLowerCase();
+          setState(() {
+            data = data.where((registros) {
+              var noteTitle = registros.folio.toLowerCase();
+              return noteTitle.contains(text);
+            }).toList();
+          });
+        },
       ),
     );
   }

@@ -63,7 +63,7 @@ class LoginPage extends StatelessWidget {
           child: Column(
             children: <Widget>[
               Icon(
-                Icons.person_pin_circle,
+                Icons.fingerprint,
                 color: Colors.white,
                 size: 100.0,
               ),
