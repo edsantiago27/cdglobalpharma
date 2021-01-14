@@ -1,113 +1,111 @@
+import 'package:cdglobalpharma/src/providers/provider_pedidos.dart';
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:cdglobalpharma/src/models/model_ped_asigna.dart';
 
 class PreparacionesPage extends StatefulWidget {
-  PreparacionesPage({Key key}) : super(key: key);
+  //PreparacionesPage({Key key}) : super(key: key);
 
   @override
   _PreparacionesPageState createState() => _PreparacionesPageState();
 }
 
 class _PreparacionesPageState extends State<PreparacionesPage> {
+  // Provider datas = new Provider();
+  List<PedidosAsignadosModel> data;
+  getPed() {
+    ProviderPedidos.listPedidos().then((response) {
+      Iterable list = json.decode(response.body);
+      List<PedidosAsignadosModel> palist = List<PedidosAsignadosModel>();
+      palist = list.map((e) => PedidosAsignadosModel.fromJson(e)).toList();
+      setState(() {
+        data = palist;
+      });
+    });
+  }
+
+  final paProvider = new ProviderPedidos();
+  PedidosAsignadosModel pedidos = new PedidosAsignadosModel();
+
   @override
   Widget build(BuildContext context) {
+    PedidosAsignadosModel pedidosig = ModalRoute.of(context).settings.arguments;
+    if (pedidos != null) {
+      pedidos = pedidosig;
+    }
+    getPed();
     return Scaffold(
       appBar: AppBar(
         title: Text('Picking start'),
       ),
-      body: _form(),
+      body: data == null
+          ? Center(child: CircularProgressIndicator())
+          : buildDataBody(context),
     );
   }
 
-  Widget _form() {}
+  Widget buildDataBody(context) {
+    return SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: SingleChildScrollView(
+          child: DataTable(
+            columns: const <DataColumn>[
+              DataColumn(
+                numeric: false,
+                label: Text(
+                  'Folio',
+                  style: TextStyle(fontStyle: FontStyle.italic),
+                ),
+              ),
+              DataColumn(
+                label: Text(
+                  'Operador',
+                  style: TextStyle(fontStyle: FontStyle.italic),
+                ),
+              ),
+              DataColumn(
+                label: Text(
+                  'NumPedido',
+                  style: TextStyle(fontStyle: FontStyle.italic),
+                ),
+              ),
+              DataColumn(
+                label: Text(
+                  'Cant Lineas',
+                  style: TextStyle(fontStyle: FontStyle.italic),
+                ),
+              ),
+              DataColumn(
+                label: Text(
+                  'Bodega',
+                  style: TextStyle(fontStyle: FontStyle.italic),
+                ),
+              ),
+            ],
+            rows: data
+                .map(
+                  (data) => DataRow(
+                    //onSelectChanged: (data) => pedidos,
+                    cells: <DataCell>[
+                      DataCell(
+                        Text(data.folio),
+                        showEditIcon: true,
+                        onTap: () {
+                          Navigator.pushReplacementNamed(context, 'preparacion',
+                              arguments: pedidos.folio
+                              );
+                        },
+                      ),
+                      DataCell(Text(data.desPer)),
+                      DataCell(Text(data.numPed)),
+                      DataCell(Text(data.lineas.toString())),
+                      DataCell(Text(data.bodega)),
+                      // DataCell(ButtonBar()),
+                    ],
+                  ),
+                )
+                .toList(),
+          ),
+        ));
+  }
 }
-
-// import 'dart:convert';
-// import 'package:cdglobalpharma/src/models/model_ped_asigna.dart';
-// import 'package:cdglobalpharma/src/providers/provider_login.dart';
-// import 'package:flutter/material.dart';
-
-// class PedidosAsignados extends StatefulWidget {
-//   final lgpersonProvider = new Provider();
-//   //PedidosAsignados({Key key}) : super(key: key);
-
-//   @override
-//   _PedidosAsignadosState createState() => _PedidosAsignadosState();
-// }
-
-// class _PedidosAsignadosState extends State<PedidosAsignados> {
-//   List<PedidosAsignadosModel> pedidos;
-//   getPedidoAsignado() {
-//     Provider.listPedidos().then((response) {
-//       Iterable list = json.decode(response.body);
-//       List<PedidosAsignadosModel> pedidosList = List<PedidosAsignadosModel>();
-//       pedidosList =
-//           list.map((model) => PedidosAsignadosModel.fromJson(model)).toList();
-//       setState(() {
-//         pedidos = pedidosList;
-//       });
-//     });
-//   }
-
-//   final pedidosProvider = new Provider();
-//   PedidosAsignadosModel pedidosAsignados = new PedidosAsignadosModel();
-
-//   @override
-//   Widget build(BuildContext context) {
-//     PedidosAsignadosModel pedidosData =
-//         ModalRoute.of(context).settings.arguments;
-//     if (pedidosAsignados != null) {
-//       pedidosAsignados = pedidosData;
-//     }
-//     getPedidoAsignado();
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Pedidos Asignados'),
-//       ),
-//       body: pedidos == null
-//           ? Center(child: CircularProgressIndicator())
-//           : _builPedidosList(),
-//       floatingActionButton: _btnPicking(context),
-//     );
-//   }
-
-//   Widget _builPedidosList() {
-//     return ListView.builder(
-//         itemCount: pedidos.length,
-//         itemBuilder: (context, index) {
-//           return Card(
-//             color: Colors.amberAccent,
-//             elevation: 3.0,
-//             child: ListTile(
-//               trailing: Icon(Icons.check_box),
-//               //title: Text('0136' + '    ' + 'JOSE GARCIA'),
-//               title: Text('Nombre: '),
-//               subtitle: Text('Folio: ' +
-//                   '0000692797' +
-//                   '    ' +
-//                   'NumPedido: ' +
-//                   '0000121690' +
-//                   '    ' +
-//                   'Bodega: ' +
-//                   '850' +
-//                   '    ' +
-//                   'Asignado' +
-//                   '    ' +
-//                   'Total Lin: ' +
-//                   '2'),
-//               leading: new Icon(Icons.person),
-//               onTap: () {
-//                 Navigator.pushNamed(context, 'picking_page',
-//                     arguments: pedidosAsignados);
-//               },
-//             ),
-//           );
-//         });
-//   }
-
-//   Widget _btnPicking(BuildContext context) {
-//     return FloatingActionButton(
-//         child: Icon(Icons.add),
-//         backgroundColor: Colors.blueAccent,
-//         onPressed: () {});
-//   }
-// }

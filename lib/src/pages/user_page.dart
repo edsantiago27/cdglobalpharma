@@ -76,8 +76,11 @@ class _LgpersonState extends State<Lgperson> {
 
   _btnAddUser(BuildContext context) {
     return FloatingActionButton(
-        child: Icon(Icons.add),
-        backgroundColor: Colors.blueAccent,
+        child: Icon(
+          Icons.add,
+          color: Colors.amber,
+        ),
+        backgroundColor: Colors.indigoAccent,
         onPressed: () => Navigator.pushNamed(context, 'detail_user'));
   }
 }

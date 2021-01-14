@@ -1,12 +1,16 @@
 import 'dart:ui';
 
+import 'package:cdglobalpharma/src/pages/pedidos_page.dart';
 import 'package:cdglobalpharma/src/pages/picking_pages.dart';
+import 'package:cdglobalpharma/src/pages/preparaciones.dart';
 import 'package:cdglobalpharma/src/pages/test_page.dart';
 import 'package:cdglobalpharma/src/providers/provider_login.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'user_page.dart';
 
 class HomePage extends StatelessWidget {
+  static final String routeName = 'home';
   @override
   Widget build(BuildContext context) {
     final bloc = Provider.of(context);
@@ -15,10 +19,18 @@ class HomePage extends StatelessWidget {
         title: Text('Home'),
       ),
       drawer: Menu(),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[Text('Usuario:  ${bloc.usuario}')],
+      body: Card(
+        color: Colors.grey[200],
+        elevation: 4.0,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            ListTile(
+              leading: Icon(Icons.dashboard),
+              title: Text('Preparaciones por día:'),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -35,7 +47,7 @@ class Menu extends StatelessWidget {
             accountName: Text(
               "Usuario: ${bloc.usuario}",
               style: TextStyle(
-                color: Colors.blueAccent,
+                color: Colors.indigoAccent,
               ),
             ),
             currentAccountPicture: CircleAvatar(
@@ -47,10 +59,16 @@ class Menu extends StatelessWidget {
                     image: AssetImage('assets/fondo2.jpg'), fit: BoxFit.cover)),
           ),
           new ListTile(
+              leading: Icon(Icons.pages, color: Colors.indigoAccent),
+              title: Text('Home'),
+              onTap: () {
+                Navigator.pushReplacementNamed(context, HomePage.routeName);
+              }),
+          new ListTile(
             title: Text('Usuarios'),
             leading: Icon(
               Icons.face,
-              color: Colors.blueAccent,
+              color: Colors.indigoAccent,
             ),
             onTap: () {
               Navigator.of(context)
@@ -61,7 +79,7 @@ class Menu extends StatelessWidget {
             title: Text('Pickings'),
             leading: Icon(
               Icons.fact_check,
-              color: Colors.blueAccent,
+              color: Colors.indigoAccent,
             ),
             onTap: () {
               Navigator.of(context).push(
@@ -72,18 +90,18 @@ class Menu extends StatelessWidget {
             title: Text('Pedidos Asignados'),
             leading: Icon(
               Icons.check_box,
-              color: Colors.blueAccent,
+              color: Colors.indigoAccent,
             ),
             onTap: () {
               Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => PedidosAsignados()));
+                  MaterialPageRoute(builder: (context) => PreparacionesPage()));
             },
           ),
           new ListTile(
             title: Text('Configuración'),
             leading: Icon(
               Icons.settings,
-              color: Colors.blueAccent,
+              color: Colors.indigoAccent,
             ),
             onTap: () {
               //Navigator.of(context).push(
@@ -94,11 +112,10 @@ class Menu extends StatelessWidget {
             title: Text('Salir'),
             leading: Icon(
               Icons.close,
-              color: Colors.blueAccent,
+              color: Colors.indigoAccent,
             ),
             onTap: () {
-              //Navigator.of(context).push(
-              // MaterialPageRoute(builder: (context) => PedidosAsignados()));
+              SystemNavigator.pop();
             },
           ),
         ],

@@ -2,6 +2,7 @@ import 'package:cdglobalpharma/src/pages/home_page.dart';
 import 'package:cdglobalpharma/src/pages/login_page.dart';
 import 'package:cdglobalpharma/src/pages/pedidos_page.dart';
 import 'package:cdglobalpharma/src/pages/picking_pages.dart';
+import 'package:cdglobalpharma/src/pages/preparaciones.dart';
 import 'package:cdglobalpharma/src/pages/test_page.dart';
 import 'package:flutter/material.dart';
 
@@ -16,6 +17,11 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'App CD Global Pharma',
+        theme: ThemeData(
+          primaryColor: Colors.indigoAccent,
+          accentColor: Colors.indigoAccent[100],
+          fontFamily: 'Montserrat',
+        ),
         initialRoute: 'splash',
         routes: {
           'splash': (BuildContext context) => SplashScreen(),
@@ -23,6 +29,7 @@ class MyApp extends StatelessWidget {
           'home': (BuildContext context) => HomePage(),
           'detail_user': (BuildContext context) => UserDetailPage(),
           'picking_page': (BuildContext context) => PreparacionesPage(),
+          'preparacion': (BuildContext context) => PreparacionPage(),
         },
       ),
     );

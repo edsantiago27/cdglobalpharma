@@ -71,13 +71,10 @@ class _PedidosAsignadosState extends State<PedidosAsignados> {
             data[index].status +
             '    ' +
             'Total Lin: ' +
-            data[index].lneas.toString()),
+            data[index].lineas.toString()),
         leading: new Icon(Icons.assignment_ind),
         onTap: () {
-          Navigator.pushNamed(
-            context,
-            'picking_page',
-          );
+          //Navigator.pushNamed(context, 'picking_page');
         },
       ),
     );

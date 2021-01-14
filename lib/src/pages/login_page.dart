@@ -27,8 +27,8 @@ class LoginPage extends StatelessWidget {
       width: 100.0,
       height: 100.0,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(100.0),
-          color: Color.fromRGBO(255, 255, 255, 0.5)),
+          borderRadius: BorderRadius.circular(60.0),
+          color: Color.fromRGBO(255, 255, 255, 0.2)),
     );
     return Stack(
       children: <Widget>[
@@ -65,7 +65,7 @@ class LoginPage extends StatelessWidget {
               Icon(
                 Icons.fingerprint,
                 color: Colors.white,
-                size: 100.0,
+                size: 80.0,
               ),
               SizedBox(
                 height: 10.0,
@@ -100,13 +100,13 @@ class LoginPage extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 50.0),
             decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(5.0),
+                borderRadius: BorderRadius.circular(30.0),
                 boxShadow: <BoxShadow>[
                   BoxShadow(
                       color: Colors.black38,
-                      blurRadius: 3.0,
+                      blurRadius: 20.0,
                       offset: Offset(0.0, 5.0),
-                      spreadRadius: 3.0)
+                      spreadRadius: 10.0)
                 ]),
             child: Column(
               children: <Widget>[
@@ -184,11 +184,14 @@ class LoginPage extends StatelessWidget {
         return RaisedButton(
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
-            child: Text('Ingresar'),
+            child: Text(
+              'Ingresar',
+              style: TextStyle(color: Colors.grey),
+            ),
           ),
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
-          elevation: 0.15,
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0)),
+          elevation: 4.0,
           color: Colors.amber,
           textColor: Colors.white,
           onPressed: snapshot.hasData ? () => _login(context, bloc) : null,

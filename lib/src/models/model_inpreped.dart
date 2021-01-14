@@ -1,23 +1,23 @@
 // To parse this JSON data, do
 //
-//     final pickingModel = pickingModelFromJson(jsonString);
+//     final inprepedModel = inprepedModelFromJson(jsonString);
 
 import 'dart:convert';
 
-PickingModel pickingModelFromJson(String str) =>
-    PickingModel.fromJson(json.decode(str));
+InprepedModel inprepedModelFromJson(String str) =>
+    InprepedModel.fromJson(json.decode(str));
 
-String pickingModelToJson(PickingModel data) => json.encode(data.toJson());
+String inprepedModelToJson(InprepedModel data) => json.encode(data.toJson());
 
-class PickingModel {
-  PickingModel({
+class InprepedModel {
+  InprepedModel({
     this.folio,
     this.fecha,
     this.local,
     this.bodega,
     this.codigob,
     this.codmp,
-    this.cantEsc,
+    this.cantidad,
     this.coduni,
     this.codunir,
     this.factorv,
@@ -36,7 +36,8 @@ class PickingModel {
     this.cantHst,
     this.status,
     this.cantPed,
-    this.descriCom,
+    this.cantEsc,
+    this.cantNv,
   });
 
   String folio;
@@ -45,7 +46,7 @@ class PickingModel {
   String bodega;
   String codigob;
   String codmp;
-  int cantEsc;
+  int cantidad;
   String coduni;
   String codunir;
   int factorv;
@@ -64,16 +65,17 @@ class PickingModel {
   int cantHst;
   String status;
   int cantPed;
-  String descriCom;
+  int cantEsc;
+  int cantNv;
 
-  factory PickingModel.fromJson(Map<String, dynamic> json) => PickingModel(
+  factory InprepedModel.fromJson(Map<String, dynamic> json) => InprepedModel(
         folio: json["folio"],
         fecha: DateTime.parse(json["fecha"]),
         local: json["local"],
         bodega: json["bodega"],
         codigob: json["codigob"],
         codmp: json["codmp"],
-        cantEsc: json["cantEsc"],
+        cantidad: json["cantidad"],
         coduni: json["coduni"],
         codunir: json["codunir"],
         factorv: json["factorv"],
@@ -84,7 +86,7 @@ class PickingModel {
         observacion: json["observacion"],
         cantGuia: json["cantGuia"],
         numPed: json["numPed"],
-        costop: json["costo"],
+        costop: json["costop"],
         linPed: json["linPed"],
         cantAnt: json["cantAnt"],
         estado: json["estado"],
@@ -92,7 +94,8 @@ class PickingModel {
         cantHst: json["cantHst"],
         status: json["status"],
         cantPed: json["cantPed"],
-        descriCom: json["descriCom"],
+        cantEsc: json["cantEsc"],
+        cantNv: json["cantNv"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -102,7 +105,7 @@ class PickingModel {
         "bodega": bodega,
         "codigob": codigob,
         "codmp": codmp,
-        "cantEsc": cantEsc,
+        "cantidad": cantidad,
         "coduni": coduni,
         "codunir": codunir,
         "factorv": factorv,
@@ -113,7 +116,7 @@ class PickingModel {
         "observacion": observacion,
         "cantGuia": cantGuia,
         "numPed": numPed,
-        "costop": costop.toDouble(),
+        "costop": costop,
         "linPed": linPed,
         "cantAnt": cantAnt,
         "estado": estado,
@@ -121,6 +124,7 @@ class PickingModel {
         "cantHst": cantHst,
         "status": status,
         "cantPed": cantPed,
-        "descriCom": descriCom,
+        "cantEsc": cantEsc,
+        "cantNv": cantNv,
       };
 }
