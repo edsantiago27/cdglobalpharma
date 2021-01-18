@@ -9,7 +9,7 @@ import 'package:http/http.dart' as http;
 
 class Provider extends InheritedWidget {
   //static String url = 'http://192.168.0.111:8183';
-  static String url = 'http://192.168.0.5:80';
+  static String url = 'http://192.168.0.3:80';
   PedidosAsignadosModel data;
   //************************************************** */
   static Provider _instancia;
@@ -65,6 +65,5 @@ class Provider extends InheritedWidget {
     return true;
   }
 
-  
   //****************************************************************** */
 }

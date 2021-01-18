@@ -5,7 +5,7 @@ import 'package:cdglobalpharma/src/models/model_ped_asigna.dart';
 import 'package:flutter/cupertino.dart';
 
 class ProviderInpre extends ChangeNotifier {
-  static String url = 'http://192.168.0.5:80';
+  static String url = 'http://192.168.0.3:80';
 
   static final inpreUrl = '$url/api/inprepeds';
 

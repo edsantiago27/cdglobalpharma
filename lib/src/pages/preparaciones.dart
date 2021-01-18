@@ -102,7 +102,7 @@ class _PreparacionPageState extends State<PreparacionPage> {
                   (data) => DataRow(
                     //onSelectChanged: (data) => pedidos,
                     cells: <DataCell>[
-                      DataCell(Text(data.folio)),
+                      DataCell(Text(data.codigob)),
                       DataCell(Text(data.bodega)),
                       DataCell(Text(data.numPed)),
                       DataCell(Text(data.codmp)),
