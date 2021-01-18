@@ -6,7 +6,7 @@ class Validators {
     // Pattern pattern =
     //     r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
     // RegExp regExp = new RegExp(pattern);
-    if (usuario.length >= 10) {
+    if (usuario.length <= 10) {
       sink.add(usuario);
     } else {
       sink.addError('error, debe tener hasta 10 caracteres');

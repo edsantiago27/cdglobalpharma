@@ -3,7 +3,7 @@ export 'package:cdglobalpharma/src/bloc/login_bloc.dart';
 import 'package:cdglobalpharma/src/bloc/login_bloc.dart';
 import 'package:cdglobalpharma/src/models/model_lgperson.dart';
 import 'package:cdglobalpharma/src/models/model_ped_asigna.dart';
-import 'package:cdglobalpharma/src/pages/pedidos_page.dart';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 

@@ -29,10 +29,6 @@ class _PreparacionesPageState extends State<PreparacionesPage> {
 
   @override
   Widget build(BuildContext context) {
-    PedidosAsignadosModel pedidosig = ModalRoute.of(context).settings.arguments;
-    if (pedidos != null) {
-      pedidos = pedidosig;
-    }
     getPed();
     return Scaffold(
       appBar: AppBar(
@@ -91,9 +87,10 @@ class _PreparacionesPageState extends State<PreparacionesPage> {
                         Text(data.folio),
                         showEditIcon: true,
                         onTap: () {
-                          Navigator.pushReplacementNamed(context, 'preparacion',
-                              arguments: pedidos.folio
-                              );
+                          Navigator.pushReplacementNamed(
+                            context, 'preparacion',
+                             arguments: data ,
+                          );
                         },
                       ),
                       DataCell(Text(data.desPer)),
