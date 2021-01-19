@@ -7,7 +7,7 @@ import 'package:flutter/cupertino.dart';
 class ProviderInpre extends ChangeNotifier {
   static String url = 'http://192.168.0.3:80';
 
-  static final inpreUrl = '$url/api/inprepeds';
+  static final inpreUrl = '$url/api/inprepeds/';
 
   static Future listInpre() async {
     return await http.get(inpreUrl);

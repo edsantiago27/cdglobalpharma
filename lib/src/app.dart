@@ -6,6 +6,7 @@ import 'package:cdglobalpharma/src/pages/preparaciones.dart';
 import 'package:cdglobalpharma/src/pages/test_page.dart';
 import 'package:flutter/material.dart';
 
+import 'pages/preparacion_page.dart';
 import 'pages/splashscreen.dart';
 import 'pages/user_detail_page.dart';
 import 'providers/provider_login.dart';
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
           'home': (BuildContext context) => HomePage(),
           'detail_user': (BuildContext context) => UserDetailPage(),
           'picking_page': (BuildContext context) => PreparacionesPage(),
-          'preparacion': (BuildContext context) => PreparacionPage(),
+          'preparacion': (BuildContext context) => IniciarPrep(),
         },
       ),
     );

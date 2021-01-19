@@ -11,6 +11,7 @@ class PreparacionesPage extends StatefulWidget {
 }
 
 class _PreparacionesPageState extends State<PreparacionesPage> {
+  TextEditingController _nv;
   // Provider datas = new Provider();
   List<PedidosAsignadosModel> data;
   getPed() {
@@ -39,6 +40,8 @@ class _PreparacionesPageState extends State<PreparacionesPage> {
           : buildDataBody(context),
     );
   }
+
+  _showValues(folio) {}
 
   Widget buildDataBody(context) {
     return SingleChildScrollView(
@@ -87,9 +90,10 @@ class _PreparacionesPageState extends State<PreparacionesPage> {
                         Text(data.folio),
                         showEditIcon: true,
                         onTap: () {
-                          Navigator.pushReplacementNamed(
-                            context, 'preparacion',
-                             arguments: data ,
+                           Navigator.pushReplacementNamed(
+                             context,
+                             'preparacion',
+                            arguments: data,
                           );
                         },
                       ),

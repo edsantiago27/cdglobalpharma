@@ -36,6 +36,11 @@ class _LgpersonState extends State<Lgperson> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Pagina de Usuarios'),
+        actions: [
+          IconButton(icon: const Icon(Icons.search), color: Colors.white, onPressed: (){
+            
+          })
+        ],
       ),
       body: user == null
           ? Center(child: CircularProgressIndicator())
