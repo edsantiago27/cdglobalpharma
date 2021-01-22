@@ -1,5 +1,5 @@
 import 'package:cdglobalpharma/src/models/model_lgperson.dart';
-import 'package:cdglobalpharma/src/pages/user_page.dart';
+
 import 'package:cdglobalpharma/src/providers/provider_login.dart';
 import 'package:flutter/material.dart';
 
@@ -101,7 +101,8 @@ class _UserDetailPageState extends State<UserDetailPage> {
               ),
               RaisedButton.icon(
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0)),
+                    borderRadius: BorderRadius.circular(50.0)),
+                elevation: 4.0,
                 color: Colors.deepPurple,
                 textColor: Colors.white,
                 label: Text('Guardar'),

@@ -1,3 +1,4 @@
+import 'package:cdglobalpharma/src/pages/preparacion_page.dart';
 import 'package:cdglobalpharma/src/providers/provider_pedidos.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
@@ -11,7 +12,8 @@ class PreparacionesPage extends StatefulWidget {
 }
 
 class _PreparacionesPageState extends State<PreparacionesPage> {
-  TextEditingController _nv;
+  //TextEditingController _nv;
+  String folio = '';
   // Provider datas = new Provider();
   List<PedidosAsignadosModel> data;
   getPed() {
@@ -33,15 +35,13 @@ class _PreparacionesPageState extends State<PreparacionesPage> {
     getPed();
     return Scaffold(
       appBar: AppBar(
-        title: Text('Picking start'),
+        title: Text('Listado Picking'),
       ),
       body: data == null
           ? Center(child: CircularProgressIndicator())
           : buildDataBody(context),
     );
   }
-
-  _showValues(folio) {}
 
   Widget buildDataBody(context) {
     return SingleChildScrollView(
@@ -90,11 +90,22 @@ class _PreparacionesPageState extends State<PreparacionesPage> {
                         Text(data.folio),
                         showEditIcon: true,
                         onTap: () {
-                           Navigator.pushReplacementNamed(
-                             context,
-                             'preparacion',
-                            arguments: data,
-                          );
+                          folio = data.folio.toString();
+                          if (folio == data.folio) {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (BuildContext context) {
+                              return new IniciarPrep(folio);
+                            }));
+                          } else {
+                            showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text('Error'),
+                                  );
+                                });
+                          }
                         },
                       ),
                       DataCell(Text(data.desPer)),

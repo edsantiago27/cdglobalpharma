@@ -19,8 +19,9 @@ class LoginPage extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
           gradient: LinearGradient(colors: <Color>[
-        Color.fromRGBO(63, 63, 156, 1.0),
-        Color.fromRGBO(90, 70, 178, 1.0)
+        Colors.amber[50],
+        Colors.amber[500],
+        Colors.amber[800]
       ])),
     );
     final circulo = Container(
@@ -64,7 +65,7 @@ class LoginPage extends StatelessWidget {
             children: <Widget>[
               Icon(
                 Icons.fingerprint,
-                color: Colors.white,
+                color: Colors.grey[700],
                 size: 80.0,
               ),
               SizedBox(
@@ -73,7 +74,7 @@ class LoginPage extends StatelessWidget {
               ),
               Text(
                 'Operador Bodega',
-                style: TextStyle(color: Colors.white, fontSize: 25.0),
+                style: TextStyle(color: Colors.grey[700], fontSize: 25.0),
               )
             ],
           ),
@@ -112,7 +113,7 @@ class LoginPage extends StatelessWidget {
               children: <Widget>[
                 Text(
                   'Ingreso',
-                  style: TextStyle(fontSize: 20.0),
+                  style: TextStyle(fontSize: 20.0,color: Colors.grey[700],),
                 ),
                 SizedBox(height: 30.0),
                 _txtUsuario(bloc),

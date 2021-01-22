@@ -23,14 +23,27 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         fit: StackFit.expand,
         children: [
-          Container(decoration: BoxDecoration(color: Colors.blueAccent)),
+          Container(
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      begin: Alignment.topRight,
+                      end: Alignment.bottomLeft,
+                      stops: [
+                0.1,
+                0.6,
+                0.9
+              ],
+                      colors: [
+                Colors.amber[50],
+                Colors.amber[500],
+                Colors.amber[800]
+              ]))),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -45,12 +58,12 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
               Spacer(),
               SpinKitFadingCube(
-                color: Colors.amberAccent,
+                color: Colors.grey[700],
               ),
               Spacer(),
               Text(
                 'Bienvenidos a la app de CD',
-                style: TextStyle(color: Colors.amberAccent),
+                style: TextStyle(color: Colors.grey[700]),
               ),
               Spacer(),
             ],

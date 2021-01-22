@@ -7,6 +7,7 @@ String pedidosAsignadosModelToJson(PedidosAsignadosModel data) =>
     json.encode(data.toJson());
 
 class PedidosAsignadosModel {
+ 
   PedidosAsignadosModel({
     this.folio,
     this.total,
