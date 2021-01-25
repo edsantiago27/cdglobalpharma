@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:cdglobalpharma/src/models/model_inpreped.dart';
 import 'package:cdglobalpharma/src/pages/home_page.dart';
 import 'package:cdglobalpharma/src/providers/provider_inpre.dart';
-import 'package:cdglobalpharma/src/widgets/scan_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
@@ -42,9 +41,21 @@ class _IniciarPrepState extends State<IniciarPrep> {
   var dts = DTS();
   int _rowsPerPage = PaginatedDataTable.defaultRowsPerPage;
 
-  ScanButton scanButton;
-  final TextEditingController controller =
-      TextEditingController(text: 'barcodeScanRes');
+  /*********************************************************************** */
+
+  String _scanResult;
+
+  final TextEditingController controller = TextEditingController();
+
+  Future<void> _scanCode() async {
+    String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+        '#1ED760', 'Cancelar', false, ScanMode.BARCODE);
+
+    setState(() {
+      _scanResult = barcodeScanRes;
+      controller.text = _scanResult;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,14 +86,10 @@ class _IniciarPrepState extends State<IniciarPrep> {
               icon: const Icon(Icons.filter_center_focus),
               color: Colors.red,
               onPressed: () async {
-                String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-                    '#1ED760', 'Cancelar', false, ScanMode.BARCODE);
-                return barcodeScanRes;
+                _scanCode();
               }),
         ],
       ),
-      floatingActionButton: ScanButton(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       body: ListView(
         children: [
           Container(
@@ -103,6 +110,9 @@ class _IniciarPrepState extends State<IniciarPrep> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 TextFormField(
+                  enabled: true,
+                  autofocus: true,
+                  autocorrect: false,
                   controller: controller,
                   maxLength: 15,
                   keyboardType: TextInputType.text,
