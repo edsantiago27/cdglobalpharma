@@ -2,7 +2,9 @@ import 'dart:convert';
 import 'package:cdglobalpharma/src/models/model_inpreped.dart';
 import 'package:cdglobalpharma/src/pages/home_page.dart';
 import 'package:cdglobalpharma/src/providers/provider_inpre.dart';
+import 'package:cdglobalpharma/src/widgets/scan_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 import 'pedidos_page.dart';
 
@@ -36,15 +38,51 @@ class _IniciarPrepState extends State<IniciarPrep> {
   String _btn3SelectedVal;
 
   /*********************VARIABLES DE LA CLASE DTS***************************/
+
   var dts = DTS();
   int _rowsPerPage = PaginatedDataTable.defaultRowsPerPage;
 
+  ScanButton scanButton;
+  final TextEditingController controller =
+      TextEditingController(text: 'barcodeScanRes');
+
   @override
   Widget build(BuildContext context) {
+    List<InprepedModel> data;
+
+    getPrep() {
+      ProviderInpre.listInpre().then((value) {
+        Iterable list = json.decode(value.body);
+        List<InprepedModel> inpreList = List<InprepedModel>();
+        inpreList = list.map((e) => InprepedModel.fromJson(e)).toList();
+
+        if (data == null) {
+          Center(
+            child: CircularProgressIndicator(),
+          );
+        } else {
+          return data = inpreList;
+        }
+      });
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Start Picking'),
+        actions: [
+          IconButton(
+              tooltip: 'Scan BARCODE',
+              icon: const Icon(Icons.filter_center_focus),
+              color: Colors.red,
+              onPressed: () async {
+                String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+                    '#1ED760', 'Cancelar', false, ScanMode.BARCODE);
+                return barcodeScanRes;
+              }),
+        ],
       ),
+      floatingActionButton: ScanButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       body: ListView(
         children: [
           Container(
@@ -65,6 +103,7 @@ class _IniciarPrepState extends State<IniciarPrep> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 TextFormField(
+                  controller: controller,
                   maxLength: 15,
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
@@ -130,7 +169,6 @@ class _IniciarPrepState extends State<IniciarPrep> {
                         color: Colors.amber,
                       ),
                     ],
-                    
                   ),
                 ),
                 const SizedBox(
@@ -166,7 +204,9 @@ class _IniciarPrepState extends State<IniciarPrep> {
                       EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(50.0)),
-                  onPressed: () {},
+                  onPressed: () {
+                    print(data);
+                  },
                   elevation: 4.0,
                   color: Colors.amber,
                   icon: Icon(Icons.check_circle),
@@ -175,33 +215,34 @@ class _IniciarPrepState extends State<IniciarPrep> {
               ],
             ),
           ),
-          //data == null
-          //? Center(
-          //    child: CircularProgressIndicator(),
-          //  )
-          // :
-          SafeArea(
-            child: SingleChildScrollView(
-              child: PaginatedDataTable(
-                header: Text('Preparación'),
-                columns: [
-                  DataColumn(label: Text('CodB')),
-                  DataColumn(label: Text('Ubi')),
-                  DataColumn(label: Text('Lot')),
-                  DataColumn(label: Text('Cant')),
-                  DataColumn(label: Text('Bod')),
-                ],
-                source: dts,
-                onRowsPerPageChanged: (r) {
-                  setState(() {
-                    _rowsPerPage = r;
-                  });
-                },
-                rowsPerPage: _rowsPerPage,
-              ),
-            ),
-          ),
+          data == null
+              ? Center(
+                  child: CircularProgressIndicator(),
+                )
+              : SafeArea(
+                  child: SingleChildScrollView(
+                    child: PaginatedDataTable(
+                      header: Text('Preparación'),
+                      columns: [
+                        DataColumn(label: Text('CodB')),
+                        DataColumn(label: Text('Cant')),
+                        DataColumn(label: Text('Ubic')),
+                        DataColumn(label: Text('Lot')),
+                        DataColumn(label: Text('Bod')),
+                      ],
+                      source: dts,
+                      onRowsPerPageChanged: (r) {
+                        setState(() {
+                          _rowsPerPage = r;
+                        });
+                      },
+                      rowsPerPage: _rowsPerPage,
+                    ),
+                  ),
+                ),
           Container(
+            padding: EdgeInsets.all(20),
+            margin: EdgeInsets.only(right: 2.0),
             child: Column(
               children: [
                 Row(
@@ -233,7 +274,7 @@ class _IniciarPrepState extends State<IniciarPrep> {
                           borderRadius: BorderRadius.circular(50.0)),
                       color: Colors.amber,
                       icon: Icon(Icons.save_alt),
-                      label: Text('¿Desea Confirmar Picking?  OK'),
+                      label: Text('¿Picking OK?'),
                     ),
                     Spacer(),
                     RaisedButton.icon(
@@ -280,8 +321,8 @@ class _IniciarPrepState extends State<IniciarPrep> {
 class DTS extends DataTableSource {
   List<InprepedModel> data;
   getPrep() {
-    ProviderInpre.listInpre().then((value) {
-      Iterable list = json.decode(value.body);
+    ProviderInpre.listInpre().then((response) {
+      Iterable list = json.decode(response.body);
       List<InprepedModel> inpreList = List<InprepedModel>();
       inpreList = list.map((e) => InprepedModel.fromJson(e)).toList();
 
@@ -298,11 +339,11 @@ class DTS extends DataTableSource {
   @override
   DataRow getRow(int index) {
     return DataRow.byIndex(index: index, cells: [
-      DataCell(Text('data[index].codigob')),
-      DataCell(Text('ubicacion')),
-      DataCell(Text('lote')),
-      DataCell(Text('cantPed')),
-      DataCell(Text('bodega')),
+      DataCell(Text(data[index].codigob)),
+      DataCell(Text(data[index].cantPed.toString())),
+      DataCell(Text(data[index].ubicacion)),
+      DataCell(Text(data[index].lote)),
+      DataCell(Text(data[index].bodega)),
     ]);
   }
 
