@@ -13,7 +13,7 @@ class PreparacionesPage extends StatefulWidget {
 
 class _PreparacionesPageState extends State<PreparacionesPage> {
   //TextEditingController _nv;
-  String folio = '';
+  String folio;
   // Provider datas = new Provider();
   List<PedidosAsignadosModel> data;
   getPed() {
@@ -35,7 +35,7 @@ class _PreparacionesPageState extends State<PreparacionesPage> {
     getPed();
     return Scaffold(
       appBar: AppBar(
-        title: Text('Listado Picking'),
+        title: Center(child: Text('Listado Picking',) ),
       ),
       body: data == null
           ? Center(child: CircularProgressIndicator())
@@ -52,7 +52,7 @@ class _PreparacionesPageState extends State<PreparacionesPage> {
               DataColumn(
                 numeric: false,
                 label: Text(
-                  'Folio',
+                  'Folio', 
                   style: TextStyle(fontStyle: FontStyle.italic),
                 ),
               ),

@@ -41,7 +41,7 @@ class _IniciarPrepState extends State<IniciarPrep> {
   var dts = DTS();
   int _rowsPerPage = PaginatedDataTable.defaultRowsPerPage;
 
-  /*********************************************************************** */
+  /******************METODO PARA SCAN Y ENVIO DE CONTROLER CON VALOR************************* */
 
   String _scanResult;
 
@@ -57,26 +57,27 @@ class _IniciarPrepState extends State<IniciarPrep> {
     });
   }
 
+/*************************************************** */
+  List<InprepedModel> data;
+
+  getPrep() {
+    ProviderInpre.listInpre().then((value) {
+      Iterable list = json.decode(value.body);
+      List<InprepedModel> inpreList = List<InprepedModel>();
+      inpreList = list.map((e) => InprepedModel.fromJson(e)).toList();
+
+      if (data == null) {
+        Center(
+          child: CircularProgressIndicator(),
+        );
+      } else {
+        return data = inpreList;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    List<InprepedModel> data;
-
-    getPrep() {
-      ProviderInpre.listInpre().then((value) {
-        Iterable list = json.decode(value.body);
-        List<InprepedModel> inpreList = List<InprepedModel>();
-        inpreList = list.map((e) => InprepedModel.fromJson(e)).toList();
-
-        if (data == null) {
-          Center(
-            child: CircularProgressIndicator(),
-          );
-        } else {
-          return data = inpreList;
-        }
-      });
-    }
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Start Picking'),
@@ -330,8 +331,8 @@ class _IniciarPrepState extends State<IniciarPrep> {
 
 class DTS extends DataTableSource {
   List<InprepedModel> data;
-  getPrep() {
-    ProviderInpre.listInpre().then((response) {
+  getPrep(folio) {
+    ProviderInpre.inpreParam(folio).then((response) {
       Iterable list = json.decode(response.body);
       List<InprepedModel> inpreList = List<InprepedModel>();
       inpreList = list.map((e) => InprepedModel.fromJson(e)).toList();
@@ -348,6 +349,7 @@ class DTS extends DataTableSource {
 
   @override
   DataRow getRow(int index) {
+    //getPrep();
     return DataRow.byIndex(index: index, cells: [
       DataCell(Text(data[index].codigob)),
       DataCell(Text(data[index].cantPed.toString())),
