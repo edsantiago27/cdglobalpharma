@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class ProviderInpre extends ChangeNotifier {
-  static String url = 'http://192.168.0.3:80';
+  static String url = 'https://localhost:44318/';
 
   static final inpreUrl = '$url/api/inprepeds';
 

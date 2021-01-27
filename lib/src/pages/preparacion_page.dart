@@ -61,23 +61,33 @@ class _IniciarPrepState extends State<IniciarPrep> {
   List<InprepedModel> data;
 
   getPrep() {
-    ProviderInpre.listInpre().then((value) {
+    ProviderInpre.inpreParam(widget.folio).then((value) {
+     print("=====> " + value.toString());
+     print("======> " + json.decode(value.body).toString());
       Iterable list = json.decode(value.body);
       List<InprepedModel> inpreList = List<InprepedModel>();
       inpreList = list.map((e) => InprepedModel.fromJson(e)).toList();
-
-      if (data == null) {
-        Center(
-          child: CircularProgressIndicator(),
-        );
-      } else {
-        return data = inpreList;
+      
+      if (inpreList != null) {
+        setState(() {
+          data = inpreList;
+        });
       }
+      // if (data == null) {
+      //   Center(
+      //     child: CircularProgressIndicator(),
+      //   );
+      // }
+      //  else {
+
+      //   return data = inpreList;
+      // }
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    getPrep();
     return Scaffold(
       appBar: AppBar(
         title: Text('Start Picking'),
@@ -251,6 +261,38 @@ class _IniciarPrepState extends State<IniciarPrep> {
                     ),
                   ),
                 ),
+          // FutureBuilder<dynamic>(
+          //     future: getPrep(),
+          //     builder: (context, snapshot) {
+          //       if (snapshot.hasData) {
+          //         print(snapshot.data.toString());
+          //         return SafeArea(
+          //           child: SingleChildScrollView(
+          //             child: PaginatedDataTable(
+          //               header: Text('Preparación'),
+          //               columns: [
+          //                 DataColumn(label: Text('CodB')),
+          //                 DataColumn(label: Text('Cant')),
+          //                 DataColumn(label: Text('Ubic')),
+          //                 DataColumn(label: Text('Lot')),
+          //                 DataColumn(label: Text('Bod')),
+          //               ],
+          //               source: dts,
+          //               onRowsPerPageChanged: (r) {
+          //                 setState(() {
+          //                   _rowsPerPage = r;
+          //                 });
+          //               },
+          //               rowsPerPage: _rowsPerPage,
+          //             ),
+          //           ),
+          //         );
+          //       } else {
+          //         return Center(
+          //           child: CircularProgressIndicator(),
+          //         );
+          //       }
+          //     }),
           Container(
             padding: EdgeInsets.all(20),
             margin: EdgeInsets.only(right: 2.0),
@@ -322,7 +364,6 @@ class _IniciarPrepState extends State<IniciarPrep> {
               ],
             ),
           ),
-          Spacer(),
         ],
       ),
     );
