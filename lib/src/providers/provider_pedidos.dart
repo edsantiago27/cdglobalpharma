@@ -5,9 +5,9 @@ import 'package:cdglobalpharma/src/models/model_ped_asigna.dart';
 import 'package:flutter/cupertino.dart';
 
 class ProviderPedidos extends ChangeNotifier {
-  static String url = 'http://192.168.0.3:80';
+  static String url = 'http://192.168.0.3:8182/api';
 
-  static final pedidosUrl = '$url/api/pedidosasignadoes';
+  static final pedidosUrl = '$url/pedidosasignadoes';
 
   static Future listPedidos() async {
     return await http.get(pedidosUrl);

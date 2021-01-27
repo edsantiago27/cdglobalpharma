@@ -9,7 +9,7 @@ import 'package:http/http.dart' as http;
 
 class Provider extends InheritedWidget {
   //static String url = 'http://192.168.0.111:8183';
-  static String url = 'http://192.168.0.3:80';
+  static String url = 'http://192.168.0.3:8182/api';
   PedidosAsignadosModel data;
   //************************************************** */
   static Provider _instancia;
@@ -35,7 +35,7 @@ class Provider extends InheritedWidget {
 
 //*************************LGPERSON***************************** */
 
-  static final listUrl = '$url/api/lgpersons';
+  static final listUrl = '$url/lgpersons';
 
   // METODO PARA MOSTRAR LSTADO DE LGPERSONS
   static Future listUser() async {
@@ -43,14 +43,14 @@ class Provider extends InheritedWidget {
   }
 
   static Future<bool> editUser(LgpersonModel lgperson) async {
-    final urledit = '$url/api/lgpersons/${lgperson.codPer}';
+    final urledit = '$url/lgpersons/${lgperson.codPer}';
     final resp = await http.put(urledit, body: usersModelToJson(lgperson));
     final decodeData = json.decode(resp.body);
     return true;
   }
 
 //************************PEDIDO ASIGNADOS************************** */
-  static final pedidosUrl = '$url/api/pedidosasignadoes';
+  static final pedidosUrl = '$url/pedidosasignadoes';
 
   static Future listPedidos() async {
     return await http.get(pedidosUrl);
@@ -58,7 +58,7 @@ class Provider extends InheritedWidget {
 
   static Future<bool> editPedidosA(
       PedidosAsignadosModel pedidosAsignados) async {
-    final urleditpa = '$url/api/pedidosasignadoes/${pedidosAsignados.codPer}';
+    final urleditpa = '$url/pedidosasignadoes/${pedidosAsignados.codPer}';
     final resp = await http.put(urleditpa,
         body: pedidosAsignadosModelToJson(pedidosAsignados));
     final decodepaData = json.decode(resp.body);

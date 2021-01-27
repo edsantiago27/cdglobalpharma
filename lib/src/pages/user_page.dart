@@ -37,9 +37,10 @@ class _LgpersonState extends State<Lgperson> {
       appBar: AppBar(
         title: Text('Pagina de Usuarios'),
         actions: [
-          IconButton(icon: const Icon(Icons.search), color: Colors.white, onPressed: (){
-            
-          })
+          IconButton(
+              icon: const Icon(Icons.search),
+              color: Colors.white,
+              onPressed: () {})
         ],
       ),
       body: user == null
