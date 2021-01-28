@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 class ProviderInpre extends ChangeNotifier {
   static String url = 'http://192.168.0.3:8182/api/';
 
-  static final inpreUrl = '$url/api/inprepeds';
+  static final inpreUrl = '$url/inprepeds';
 
   //METODO GET INPREPED
   static Future listInpre() async {

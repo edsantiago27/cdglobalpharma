@@ -41,7 +41,7 @@ class _ListPickingPageState extends State<ListPickingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Listado de Picking'),
+        title: Text('Listado de Picking view'),
       ),
       body: ListView.builder(
         itemCount: data.length + 1,
@@ -62,7 +62,9 @@ class _ListPickingPageState extends State<ListPickingPage> {
             data[index].numPed +
             ' ' +
             'Fecha: ' +
-            data[index].fecha.toIso8601String() + ' '+ ''),
+            data[index].fecha.toIso8601String() +
+            ' ' +
+            ''),
         onTap: () {},
       ),
     );

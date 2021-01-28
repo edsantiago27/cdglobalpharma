@@ -61,13 +61,13 @@ class _IniciarPrepState extends State<IniciarPrep> {
   List<InprepedModel> data;
 
   getPrep() {
-    ProviderInpre.inpreParam(widget.folio).then((value) {
-     print("=====> " + value.toString());
-     print("======> " + json.decode(value.body).toString());
+    ProviderInpre.listInpre().then((value) {
+      print("=====> " + value.toString());
+      print("======> " + json.decode(value.body));
       Iterable list = json.decode(value.body);
       List<InprepedModel> inpreList = List<InprepedModel>();
       inpreList = list.map((e) => InprepedModel.fromJson(e)).toList();
-      
+
       if (inpreList != null) {
         setState(() {
           data = inpreList;
@@ -90,7 +90,9 @@ class _IniciarPrepState extends State<IniciarPrep> {
     getPrep();
     return Scaffold(
       appBar: AppBar(
-        title: Text('Start Picking'),
+        title: Center(
+          child: Text('Start Picking'),
+        ),
         actions: [
           IconButton(
               tooltip: 'Scan BARCODE',
