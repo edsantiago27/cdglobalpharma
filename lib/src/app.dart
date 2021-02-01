@@ -3,6 +3,7 @@ import 'package:cdglobalpharma/src/pages/login_page.dart';
 import 'package:cdglobalpharma/src/pages/pedidos_page.dart';
 import 'package:flutter/material.dart';
 
+import 'pages/checkout_pages.dart';
 import 'pages/preparacion_page.dart';
 import 'pages/splashscreen.dart';
 import 'pages/user_detail_page.dart';
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
           'detail_user': (BuildContext context) => UserDetailPage(),
           'picking_page': (BuildContext context) => PreparacionesPage(),
           'preparacion': (BuildContext context) => IniciarPrep(folio),
+          'inprebkp': (BuildContext context) => CheckoutPage(folio),
         },
       ),
     );

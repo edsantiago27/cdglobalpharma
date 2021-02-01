@@ -1,74 +1,73 @@
 // To parse this JSON data, do
 //
-//     final inprepedModel = inprepedModelFromJson(jsonString);
+//     final inprebkpModel = inprebkpModelFromJson(jsonString);
 
 import 'dart:convert';
 
-InprepedModel inprepedModelFromJson(String str) =>
-    InprepedModel.fromJson(json.decode(str));
+InprebkpModel inprebkpModelFromJson(String str) => InprebkpModel.fromJson(json.decode(str));
 
-String inprepedModelToJson(InprepedModel data) => json.encode(data.toJson());
+String inprebkpModelToJson(InprebkpModel data) => json.encode(data.toJson());
 
-class InprepedModel {
-  InprepedModel({
-    this.folio,
-    this.fecha,
-    this.local,
-    this.bodega,
-    this.codigob,
-    this.codmp,
-    this.cantidad,
-    this.coduni,
-    this.codunir,
-    this.factorv,
-    this.lote,
-    this.ubicacion,
-    this.vence,
-    this.motivo,
-    this.observacion,
-    this.cantGuia,
-    this.numPed,
-    this.costop,
-    this.linPed,
-    this.cantAnt,
-    this.estado,
-    this.estPrep,
-    this.cantHst,
-    this.status,
-    this.cantPed,
-    this.cantEsc,
-    this.cantNv,
-  });
+class InprebkpModel {
+    InprebkpModel({
+        this.folio,
+        this.fecha,
+        this.local,
+        this.bodega,
+        this.codigob,
+        this.codmp,
+        this.cantidad,
+        this.coduni,
+        this.codunir,
+        this.factorv,
+        this.lote,
+        this.ubicacion,
+        this.vence,
+        this.motivo,
+        this.observacion,
+        this.cantGuia,
+        this.numPed,
+        this.costop,
+        this.linPed,
+        this.cantAnt,
+        this.estado,
+        this.estPrep,
+        this.cantHst,
+        this.status,
+        this.cantPed,
+        this.cantEsc,
+        this.cantNv,
+    });
 
-  String folio;
-  DateTime fecha;
-  int local;
-  String bodega;
-  String codigob;
-  String codmp;
-  int cantidad;
-  String coduni;
-  String codunir;
-  int factorv;
-  String lote;
-  String ubicacion;
-  DateTime vence;
-  String motivo;
-  String observacion;
-  int cantGuia;
-  String numPed;
-  int costop;
-  int linPed;
-  int cantAnt;
-  String estado;
-  String estPrep;
-  int cantHst;
-  String status;
-  int cantPed;
-  int cantEsc;
-  int cantNv;
+    String folio;
+    DateTime fecha;
+    int local;
+    String bodega;
+    String codigob;
+    String codmp;
+    int cantidad;
+    String coduni;
+    String codunir;
+    int factorv;
+    String lote;
+    String ubicacion;
+    DateTime vence;
+    String motivo;
+    String observacion;
+    int cantGuia;
+    String numPed;
+    double costop;
+    int linPed;
+    int cantAnt;
+    String estado;
+    String estPrep;
+    int cantHst;
+    String status;
+    int cantPed;
+    int cantEsc;
+    dynamic cantNv;
 
-  factory InprepedModel.fromJson(Map<String, dynamic> json) => InprepedModel(
+    factory InprebkpModel.fromJson(Map<String, dynamic> json) => InprebkpModel(
         folio: json["folio"],
         fecha: DateTime.parse(json["fecha"]),
         local: json["local"],
@@ -86,7 +85,7 @@ class InprepedModel {
         observacion: json["observacion"],
         cantGuia: json["cantGuia"],
         numPed: json["numPed"],
-        //costop: json["costop"],
+        costop: json["costop"].toDouble(),
         linPed: json["linPed"],
         cantAnt: json["cantAnt"],
         estado: json["estado"],
@@ -96,9 +95,9 @@ class InprepedModel {
         cantPed: json["cantPed"],
         cantEsc: json["cantEsc"],
         cantNv: json["cantNv"],
-      );
+    );
 
-  Map<String, dynamic> toJson() => {
+    Map<String, dynamic> toJson() => {
         "folio": folio,
         "fecha": fecha.toIso8601String(),
         "local": local,
@@ -116,7 +115,7 @@ class InprepedModel {
         "observacion": observacion,
         "cantGuia": cantGuia,
         "numPed": numPed,
-        "costop": costop.toString(),
+        "costop": costop,
         "linPed": linPed,
         "cantAnt": cantAnt,
         "estado": estado,
@@ -126,5 +125,5 @@ class InprepedModel {
         "cantPed": cantPed,
         "cantEsc": cantEsc,
         "cantNv": cantNv,
-      };
+    };
 }

@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'package:cdglobalpharma/src/models/model_inpreped.dart';
-import 'package:cdglobalpharma/src/pages/home_page.dart';
+
+import 'package:cdglobalpharma/src/providers/provider_codb.dart';
 import 'package:cdglobalpharma/src/providers/provider_inpre.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
+import 'checkout_pages.dart';
 import 'pedidos_page.dart';
 
 class IniciarPrep extends StatefulWidget {
@@ -36,11 +38,6 @@ class _IniciarPrepState extends State<IniciarPrep> {
   String _btn2SelectedVal;
   String _btn3SelectedVal;
 
-  /*********************VARIABLES DE LA CLASE DTS***************************/
-
-  var dts = DTS();
-  int _rowsPerPage = PaginatedDataTable.defaultRowsPerPage;
-
   /******************METODO PARA SCAN Y ENVIO DE CONTROLER CON VALOR************************* */
 
   String _scanResult;
@@ -57,31 +54,53 @@ class _IniciarPrepState extends State<IniciarPrep> {
     });
   }
 
-/*************************************************** */
+/****************************************************************************/
   List<InprepedModel> data;
-
+  String folio;
   getPrep() {
-    ProviderInpre.listInpre().then((value) {
-      print("=====> " + value.toString());
-      print("======> " + json.decode(value.body));
-      Iterable list = json.decode(value.body);
+    ProviderInpre.inpreParam(widget.folio).then((value) {
+      //print(jsonDecode(value.body));
+      Iterable list = jsonDecode(value.body);
       List<InprepedModel> inpreList = List<InprepedModel>();
       inpreList = list.map((e) => InprepedModel.fromJson(e)).toList();
-
+      //print(inpreList);
       if (inpreList != null) {
         setState(() {
           data = inpreList;
         });
       }
-      // if (data == null) {
-      //   Center(
-      //     child: CircularProgressIndicator(),
-      //   );
-      // }
-      //  else {
+    });
+  }
 
-      //   return data = inpreList;
-      // }
+  dynamic detalle;
+  loadDataByCode(String code, BuildContext context) {
+    print('loadDataByCode ===> ' + code);
+    ProviderCodB.simacodList(code).then((value) {
+      print('se obtienen los datos en simacodList ===> ');
+      if (value != null) {
+        print('value is not null ===> ' + value.toString());
+        if (!value['existe']) {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Error'),
+                content: Text(
+                  'El código de barra no se encuentra en la base de datos',
+                ),
+                actions: [
+                  TextButton(
+                    child: Text('Cerrar'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  )
+                ],
+              );
+            },
+          );
+        }
+      }
     });
   }
 
@@ -129,6 +148,9 @@ class _IniciarPrepState extends State<IniciarPrep> {
                   controller: controller,
                   maxLength: 15,
                   keyboardType: TextInputType.text,
+                  onChanged: (value) {
+                    loadDataByCode(value, context);
+                  },
                   decoration: InputDecoration(
                       icon: Icon(
                         Icons.qr_code,
@@ -150,49 +172,6 @@ class _IniciarPrepState extends State<IniciarPrep> {
                       ),
                       hintText: 'Indique cantidad...',
                       labelText: 'Cantidad:'),
-                ),
-                Container(
-                  width: 20,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: Colors.grey[100],
-                    boxShadow: [
-                      BoxShadow(
-                          color: Colors.black,
-                          blurRadius: 4.0,
-                          offset: Offset(0.0, 1.0))
-                    ],
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(40),
-                    ),
-                  ),
-                  margin: EdgeInsets.only(top: 10.0),
-                  padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                  child: new Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      SizedBox(
-                        height: 8.0,
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.remove),
-                        onPressed: () {},
-                        color: Colors.amber,
-                      ),
-                      Text(
-                        '0',
-                        style: new TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 22,
-                            color: Colors.black),
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.add),
-                        onPressed: () {},
-                        color: Colors.amber,
-                      ),
-                    ],
-                  ),
                 ),
                 const SizedBox(
                   height: 5,
@@ -242,59 +221,7 @@ class _IniciarPrepState extends State<IniciarPrep> {
               ? Center(
                   child: CircularProgressIndicator(),
                 )
-              : SafeArea(
-                  child: SingleChildScrollView(
-                    child: PaginatedDataTable(
-                      header: Text('Preparación'),
-                      columns: [
-                        DataColumn(label: Text('CodB')),
-                        DataColumn(label: Text('Cant')),
-                        DataColumn(label: Text('Ubic')),
-                        DataColumn(label: Text('Lot')),
-                        DataColumn(label: Text('Bod')),
-                      ],
-                      source: dts,
-                      onRowsPerPageChanged: (r) {
-                        setState(() {
-                          _rowsPerPage = r;
-                        });
-                      },
-                      rowsPerPage: _rowsPerPage,
-                    ),
-                  ),
-                ),
-          // FutureBuilder<dynamic>(
-          //     future: getPrep(),
-          //     builder: (context, snapshot) {
-          //       if (snapshot.hasData) {
-          //         print(snapshot.data.toString());
-          //         return SafeArea(
-          //           child: SingleChildScrollView(
-          //             child: PaginatedDataTable(
-          //               header: Text('Preparación'),
-          //               columns: [
-          //                 DataColumn(label: Text('CodB')),
-          //                 DataColumn(label: Text('Cant')),
-          //                 DataColumn(label: Text('Ubic')),
-          //                 DataColumn(label: Text('Lot')),
-          //                 DataColumn(label: Text('Bod')),
-          //               ],
-          //               source: dts,
-          //               onRowsPerPageChanged: (r) {
-          //                 setState(() {
-          //                   _rowsPerPage = r;
-          //                 });
-          //               },
-          //               rowsPerPage: _rowsPerPage,
-          //             ),
-          //           ),
-          //         );
-          //       } else {
-          //         return Center(
-          //           child: CircularProgressIndicator(),
-          //         );
-          //       }
-          //     }),
+              : buildDatatable(),
           Container(
             padding: EdgeInsets.all(20),
             margin: EdgeInsets.only(right: 2.0),
@@ -312,12 +239,12 @@ class _IniciarPrepState extends State<IniciarPrep> {
                                       "¿Seguro confirmar preparación?"),
                                   actions: <Widget>[
                                     FlatButton(
-                                      child: Text('Guardar!'),
+                                      child: Text('Ir a Checkout..!'),
                                       onPressed: () {
                                         Navigator.of(context).push(
                                             MaterialPageRoute(builder:
                                                 (BuildContext context) {
-                                          return new HomePage();
+                                          return new CheckoutPage(folio);
                                         }));
                                       },
                                     )
@@ -370,44 +297,83 @@ class _IniciarPrepState extends State<IniciarPrep> {
       ),
     );
   }
-}
 
-class DTS extends DataTableSource {
-  List<InprepedModel> data;
-  getPrep(folio) {
-    ProviderInpre.inpreParam(folio).then((response) {
-      Iterable list = json.decode(response.body);
-      List<InprepedModel> inpreList = List<InprepedModel>();
-      inpreList = list.map((e) => InprepedModel.fromJson(e)).toList();
+  Widget buildDatatable() {
+    return SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: SingleChildScrollView(
+          child: DataTable(
+            columns: const <DataColumn>[
+              DataColumn(
+                numeric: false,
+                label: Text(
+                  'Código B',
+                  style: TextStyle(fontStyle: FontStyle.italic),
+                ),
+              ),
+              DataColumn(
+                label: Text(
+                  'Cantidad P',
+                  style: TextStyle(fontStyle: FontStyle.italic),
+                ),
+              ),
+              DataColumn(
+                label: Text(
+                  'Ubicación',
+                  style: TextStyle(fontStyle: FontStyle.italic),
+                ),
+              ),
+              DataColumn(
+                label: Text(
+                  'Lote',
+                  style: TextStyle(fontStyle: FontStyle.italic),
+                ),
+              ),
+              DataColumn(
+                label: Text(
+                  'Bodega',
+                  style: TextStyle(fontStyle: FontStyle.italic),
+                ),
+              ),
+            ],
+            rows: data
+                .map(
+                  (data) => DataRow(
+                    //onSelectChanged: (data) => pedidos,
+                    cells: <DataCell>[
+                      DataCell(
+                        Text(data.codigob),
+                        showEditIcon: true,
+                        onTap: () {
+                          // folio = data.folio.toString();
+                          // if (widget.folio == data.folio) {
+                          //   Navigator.of(context).push(MaterialPageRoute(
+                          //       builder: (BuildContext context) {
+                          //     return new IniciarPrep(widget.folio);
+                          //   }));
+                          // } else {
+                          //   showDialog(
+                          //       context: context,
+                          //       barrierDismissible: false,
+                          //       builder: (BuildContext context) {
+                          //         return AlertDialog(
+                          //           title: Text('Error'),
+                          //         );
+                          //       });
+                          // }
+                        },
+                      ),
 
-      if (data == null) {
-        Center(
-          child: CircularProgressIndicator(),
-        );
-      } else {
-        return data = inpreList;
-      }
-    });
+                      DataCell(Text(data.cantNv.toString())),
+                      DataCell(Text(data.ubicacion)),
+                      DataCell(Text(data.lote)),
+                      DataCell(Text(data.bodega)),
+                      // DataCell(ButtonBar()),
+                    ],
+                  ),
+                )
+                .toList(),
+          ),
+        ));
   }
-
-  @override
-  DataRow getRow(int index) {
-    //getPrep();
-    return DataRow.byIndex(index: index, cells: [
-      DataCell(Text(data[index].codigob)),
-      DataCell(Text(data[index].cantPed.toString())),
-      DataCell(Text(data[index].ubicacion)),
-      DataCell(Text(data[index].lote)),
-      DataCell(Text(data[index].bodega)),
-    ]);
-  }
-
-  @override
-  bool get isRowCountApproximate => true;
-
-  @override
-  int get rowCount => 5;
-
-  @override
-  int get selectedRowCount => 0;
 }

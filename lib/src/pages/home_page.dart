@@ -6,6 +6,7 @@ import 'package:cdglobalpharma/src/providers/provider_login.dart';
 import 'dart:ui';
 import 'package:flutter/services.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'asignaciones_page.dart';
 import 'user_page.dart';
 
 class HomePage extends StatelessWidget {
@@ -114,6 +115,17 @@ class Menu extends StatelessWidget {
             onTap: () {
               Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => PreparacionesPage()));
+            },
+          ),
+          new ListTile(
+            title: Text('Asignar Pedidos'),
+            leading: Icon(
+              Icons.add_moderator,
+              color: Colors.grey[500],
+            ),
+            onTap: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => AsignarPedidoPage()));
             },
           ),
           new ListTile(

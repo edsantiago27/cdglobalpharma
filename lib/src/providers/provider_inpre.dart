@@ -12,9 +12,9 @@ class ProviderInpre extends ChangeNotifier {
     return await http.get(inpreUrl);
   }
 
-  // metodo con parametro de id (folio)
+  // metodo con parametro de id (folio) viene con cantNv > 0
   static Future inpreParam(String folio) async {
-    var response = await http.get('$url/inprepeds/$folio');
+    var response = await http.get('${url}inprepeds/$folio');
     return response;
   }
 }
