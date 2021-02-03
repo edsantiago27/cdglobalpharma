@@ -13,7 +13,7 @@ class ProviderLote extends ChangeNotifier {
 
   // Metodo para llamar a la ubicacion de codigob
   static Future ubicacionPorEan(String folio, String codigob) async {
-    var response = await http.get('$url/picking/test/$codigob');
+    var response = await http.get('$url/picking/ubicacion/$codigob');
     return response;
   }
 }
