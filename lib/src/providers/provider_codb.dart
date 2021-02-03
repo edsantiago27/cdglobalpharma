@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
 class ProviderCodB extends ChangeNotifier {
-  static String url = 'http://192.168.0.3:8182/api';
+  static String url = 'http://192.168.0.4:8182/api';
 
   static final codburl = '$url/simacodb';
 
