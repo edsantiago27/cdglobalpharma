@@ -41,7 +41,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
           IconButton(
             tooltip: 'Confirmar Preparación',
             icon: Icon(Icons.check),
-            onPressed: () {},
+            onPressed: () {
+              
+            },
           )
         ],
       ),
@@ -50,7 +52,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
           Container(
             padding: EdgeInsets.all(20),
             child: Text(
-              'Folio #  ' , //+ folio,
+              'Folio #  ' + widget.folio,
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -116,10 +118,11 @@ class _CheckoutPageState extends State<CheckoutPage> {
                         showEditIcon: true,
                         onTap: () {
                           // folio = data.folio.toString();
+
                           // if (widget.folio == data.folio) {
                           //   Navigator.of(context).push(MaterialPageRoute(
                           //       builder: (BuildContext context) {
-                          //     return new IniciarPrep(widget.folio);
+                          //     return new CheckoutPage(widget.folio);
                           //   }));
                           // } else {
                           //   showDialog(

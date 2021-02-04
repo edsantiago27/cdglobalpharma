@@ -17,4 +17,30 @@ class ProviderInpre extends ChangeNotifier {
     var response = await http.get('${url}inprepeds/$folio');
     return response;
   }
+
+  // carga de api con dos modelos inpreped y simaprod
+  static Future cargaData(String folio) async {
+    var response = await http.get('http://192.168.0.4:8182/proceso/$folio');
+    if (response == null) {
+      return false;
+    }
+    return response;
+  }
+
+  // metodo para cargar las ubicaciones
+
+  static Future cargaUbicacion(String folio) async {
+    var response = await http.get('http://192.168.0.4:8182/picking/ubicacion/');
+    // if (response == null) {
+    //   return false;
+    // }
+    return response;
+  }
+
+  // metodo para cargar los lotes
+
+  static Future cargaLotes(String folio, String codigob) async {
+    var response = await http.get('http://192.168.0.4:8182/picking/');
+    return response;
+  }
 }

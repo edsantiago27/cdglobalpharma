@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:cdglobalpharma/src/models/model_inpreped.dart';
+import 'package:cdglobalpharma/src/models/model_picking.dart';
 
 import 'package:cdglobalpharma/src/providers/provider_codb.dart';
 import 'package:cdglobalpharma/src/providers/provider_inpre.dart';
@@ -12,6 +13,7 @@ import 'pedidos_page.dart';
 class IniciarPrep extends StatefulWidget {
   // IniciarPrep({Key key}) : super(key: key);
   String folio;
+  String codigob;
   IniciarPrep(this.folio);
   @override
   _IniciarPrepState createState() => _IniciarPrepState();
@@ -19,24 +21,49 @@ class IniciarPrep extends StatefulWidget {
 
 class _IniciarPrepState extends State<IniciarPrep> {
   /**************EJEMPLIFICAR EL COMBOBOX DE LOTE******************/
-  static const menuItems = <String>[
-    'lote1',
-    'lote2',
-    'lote3',
-    'lote4',
-  ];
-  final List<DropdownMenuItem<String>> _listadoMenuItems = menuItems
+  // static const menuItems = <String>[
+  //   'lote1',
+  //   'lote2',
+  //   'lote3',
+  //   'lote4',
+  // ];
+  // final List<DropdownMenuItem<String>> _listadoMenuItems = menuItems
+  //     .map(
+  //       (String value) => DropdownMenuItem<String>(
+  //         value: value,
+  //         child: Text(value),
+  //       ),
+  //     )
+  //     .toList();
+
+  String _btn1SelectedVal;
+  String _btn2SelectedVal;
+  String _btn3SelectedVal;
+
+  /******************************************************/
+
+  List<PickingModel> dataLote;
+  cargaLote() {
+    ProviderInpre.cargaLotes(folio, controller.text).then((value) {
+      Iterable list = jsonDecode(value.body);
+      List<PickingModel> listLote = List<PickingModel>();
+      listLote = list.map((e) => PickingModel.fromJson(e)).toList();
+      if (listLote != null) {
+        setState(() {
+          dataLote = listLote;
+        });
+      }
+    });
+  }
+
+  final List<DropdownMenuItem> _listadoLotes = dataLote
       .map(
-        (String value) => DropdownMenuItem<String>(
+        (value) => DropdownMenuItem(
           value: value,
-          child: Text(value),
+          child: Text(value.lote),
         ),
       )
       .toList();
-
-  String _btn1SelectedVal = 'lote1';
-  String _btn2SelectedVal;
-  String _btn3SelectedVal;
 
   /******************METODO PARA SCAN Y ENVIO DE CONTROLER CON VALOR************************* */
 
@@ -191,11 +218,11 @@ class _IniciarPrepState extends State<IniciarPrep> {
                 ListTile(
                   title: const Text('Lote Disponible:'),
                   trailing: DropdownButton(
-                    value: _btn2SelectedVal,
-                    items: _listadoMenuItems,
-                    onChanged: (String newValue) {
+                    value: dataLote,
+                    items: _listadoLotes,
+                    onChanged: (value) {
                       setState(() {
-                        _btn2SelectedVal = newValue;
+                        dataLote = value;
                       });
                     },
                     hint: const Text('Lote'),
@@ -244,7 +271,7 @@ class _IniciarPrepState extends State<IniciarPrep> {
                                         Navigator.of(context).push(
                                             MaterialPageRoute(builder:
                                                 (BuildContext context) {
-                                          return new CheckoutPage(folio);
+                                          return new CheckoutPage(widget.folio);
                                         }));
                                       },
                                     )
@@ -365,6 +392,7 @@ class _IniciarPrepState extends State<IniciarPrep> {
                       ),
 
                       DataCell(Text(data.cantNv.toString())),
+                      //DataCell(Text(data.)),
                       DataCell(Text(data.ubicacion)),
                       DataCell(Text(data.lote)),
                       DataCell(Text(data.bodega)),

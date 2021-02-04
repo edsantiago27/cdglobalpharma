@@ -1,8 +1,11 @@
 import 'package:cdglobalpharma/src/bloc/login_bloc.dart';
 import 'package:cdglobalpharma/src/providers/provider_login.dart';
+import 'package:cdglobalpharma/src/providers/provider_usuario.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
+  final usuarioProvider = new UsuarioProvider();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -113,7 +116,10 @@ class LoginPage extends StatelessWidget {
               children: <Widget>[
                 Text(
                   'Ingreso',
-                  style: TextStyle(fontSize: 20.0,color: Colors.grey[700],),
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    color: Colors.grey[700],
+                  ),
                 ),
                 SizedBox(height: 30.0),
                 _txtUsuario(bloc),
@@ -201,7 +207,8 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  _login(BuildContext context, LoginBloc bloc) {
+  _login(BuildContext context, LoginBloc bloc) async {
+    //await UsuarioProvider.login(bloc.usuario, bloc.password);
     Navigator.pushReplacementNamed(context, 'home');
   }
 }
