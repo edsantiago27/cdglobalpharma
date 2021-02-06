@@ -35,7 +35,10 @@ class _LgpersonState extends State<Lgperson> {
     getUser();
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pagina de Usuarios'),
+        title: Text(
+          'Pagina de Usuarios',
+          style: TextStyle(color: Colors.white),
+        ),
         actions: [
           IconButton(
               icon: const Icon(Icons.search),
@@ -55,12 +58,16 @@ class _LgpersonState extends State<Lgperson> {
         itemCount: user.length,
         itemBuilder: (context, index) {
           return Card(
-            color: Colors.blueGrey[100],
+            color: Colors.amberAccent[100],
             elevation: 3.0,
             child: ListTile(
               trailing: Icon(Icons.more_vert),
               isThreeLine: false,
-              title: Text('Nombre:  ' + user[index].desPer),
+              title: Text(
+                'Nombre:  ' + user[index].desPer,
+                style:
+                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+              ),
               subtitle: Text('Prep: ' +
                   user[index].prep +
                   '  ' +
@@ -84,9 +91,9 @@ class _LgpersonState extends State<Lgperson> {
     return FloatingActionButton(
         child: Icon(
           Icons.add,
-          color: Colors.amber,
+          color: Colors.white,
         ),
-        backgroundColor: Colors.indigoAccent,
+        backgroundColor: Colors.amber,
         onPressed: () => Navigator.pushNamed(context, 'detail_user'));
   }
 }

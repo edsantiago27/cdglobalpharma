@@ -103,7 +103,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(50.0)),
                 elevation: 4.0,
-                color: Colors.deepPurple,
+                color: Colors.amber[600],
                 textColor: Colors.white,
                 label: Text('Guardar'),
                 icon: Icon(Icons.save),
@@ -139,7 +139,10 @@ class _UserDetailPageState extends State<UserDetailPage> {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
-        title: Text('Detalle de Usuario'),
+        title: Text(
+          'Detalle de Usuario',
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       body: _builForm(),
     );

@@ -19,8 +19,8 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'App CD Global Pharma',
         theme: ThemeData(
-          primaryColor: Colors.grey[200],
-          accentColor: Colors.grey,
+          primaryColor: Colors.amberAccent[200],
+          accentColor: Colors.amber,
           fontFamily: 'Montserrat',
         ),
         initialRoute: 'splash',

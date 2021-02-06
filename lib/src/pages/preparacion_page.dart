@@ -1,12 +1,9 @@
 import 'dart:convert';
 import 'package:cdglobalpharma/src/models/model_inpreped.dart';
-import 'package:cdglobalpharma/src/models/model_picking.dart';
-
 import 'package:cdglobalpharma/src/providers/provider_codb.dart';
 import 'package:cdglobalpharma/src/providers/provider_inpre.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-
 import 'checkout_pages.dart';
 import 'pedidos_page.dart';
 
@@ -20,50 +17,22 @@ class IniciarPrep extends StatefulWidget {
 }
 
 class _IniciarPrepState extends State<IniciarPrep> {
-  /**************EJEMPLIFICAR EL COMBOBOX DE LOTE******************/
-  // static const menuItems = <String>[
-  //   'lote1',
-  //   'lote2',
-  //   'lote3',
-  //   'lote4',
-  // ];
-  // final List<DropdownMenuItem<String>> _listadoMenuItems = menuItems
-  //     .map(
-  //       (String value) => DropdownMenuItem<String>(
-  //         value: value,
-  //         child: Text(value),
-  //       ),
-  //     )
-  //     .toList();
-
-  String _btn1SelectedVal;
-  String _btn2SelectedVal;
-  String _btn3SelectedVal;
-
   /******************************************************/
-
-  List<PickingModel> dataLote;
-  cargaLote() {
-    ProviderInpre.cargaLotes(folio, controller.text).then((value) {
+  String _seleccion;
+  List<InprepedModel> dataLote;
+  getLote() {
+    ProviderInpre.cargaLotes(widget.folio, controller.text).then((value) {
       Iterable list = jsonDecode(value.body);
-      List<PickingModel> listLote = List<PickingModel>();
-      listLote = list.map((e) => PickingModel.fromJson(e)).toList();
-      if (listLote != null) {
+      List<InprepedModel> inpreLote = List<InprepedModel>();
+      inpreLote = list.map((e) => InprepedModel.fromJson(e)).toList();
+      if (inpreLote != null) {
         setState(() {
-          dataLote = listLote;
+          dataLote = inpreLote;
         });
       }
+      print(dataLote);
     });
   }
-
-  final List<DropdownMenuItem> _listadoLotes = dataLote
-      .map(
-        (value) => DropdownMenuItem(
-          value: value,
-          child: Text(value.lote),
-        ),
-      )
-      .toList();
 
   /******************METODO PARA SCAN Y ENVIO DE CONTROLER CON VALOR************************* */
 
@@ -134,6 +103,7 @@ class _IniciarPrepState extends State<IniciarPrep> {
   @override
   Widget build(BuildContext context) {
     getPrep();
+    //getLote();
     return Scaffold(
       appBar: AppBar(
         title: Center(
@@ -176,6 +146,7 @@ class _IniciarPrepState extends State<IniciarPrep> {
                   maxLength: 15,
                   keyboardType: TextInputType.text,
                   onChanged: (value) {
+                    getLote();
                     loadDataByCode(value, context);
                   },
                   decoration: InputDecoration(
@@ -215,16 +186,22 @@ class _IniciarPrepState extends State<IniciarPrep> {
                       hintText: 'Ubicación...',
                       labelText: 'Ubicación:'),
                 ),
+                //CargaLotePicking(),
                 ListTile(
                   title: const Text('Lote Disponible:'),
                   trailing: DropdownButton(
-                    value: dataLote,
-                    items: _listadoLotes,
-                    onChanged: (value) {
+                    items: dataLote.map((item) {
+                      return DropdownMenuItem(
+                        child: Text(item.lote),
+                        value: item.lote.toString(),
+                      );
+                    }).toList(), //this._listadoMenuItems,
+                    onChanged: (newValue) {
                       setState(() {
-                        dataLote = value;
+                        _seleccion = newValue;
                       });
                     },
+                    value: _seleccion,
                     hint: const Text('Lote'),
                   ),
                 ),

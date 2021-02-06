@@ -41,9 +41,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
           IconButton(
             tooltip: 'Confirmar Preparación',
             icon: Icon(Icons.check),
-            onPressed: () {
-              
-            },
+            onPressed: () {},
           )
         ],
       ),
@@ -56,7 +54,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: Colors.red[600],
+                color: Colors.green[600],
               ),
             ),
           ),

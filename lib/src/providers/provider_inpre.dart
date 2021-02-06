@@ -40,7 +40,7 @@ class ProviderInpre extends ChangeNotifier {
   // metodo para cargar los lotes
 
   static Future cargaLotes(String folio, String codigob) async {
-    var response = await http.get('http://192.168.0.4:8182/picking/');
+    var response = await http.post('http://192.168.0.4:8182/picking/');
     return response;
   }
 }
