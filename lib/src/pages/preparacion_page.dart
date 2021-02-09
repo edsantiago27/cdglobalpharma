@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:cdglobalpharma/src/models/model_inpreped.dart';
 import 'package:cdglobalpharma/src/providers/provider_codb.dart';
 import 'package:cdglobalpharma/src/providers/provider_inpre.dart';
-import 'package:cdglobalpharma/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'checkout_pages.dart';
