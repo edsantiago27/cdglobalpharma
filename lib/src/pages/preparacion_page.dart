@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:cdglobalpharma/src/models/model_inpreped.dart';
 import 'package:cdglobalpharma/src/providers/provider_codb.dart';
 import 'package:cdglobalpharma/src/providers/provider_inpre.dart';
+import 'package:cdglobalpharma/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'checkout_pages.dart';
@@ -18,13 +19,14 @@ class IniciarPrep extends StatefulWidget {
 }
 
 class _IniciarPrepState extends State<IniciarPrep> {
-  /***************************  METODO PARA LOTE***************************/
+  //***************************  METODO PARA LOTE***************************/
   String _seleccion;
   List dataLote;
-  var url = 'http://192.168.0.4:8182/api/inprepeds/';
+  //var url = 'http://192.168.0.4:8182/api/inprepeds/';
+  var url = 'http://192.168.0.111:8183/api/inprepeds/';
 
-  Future<String> getLote() async {
-    var res = await http.get(url + '${folio}/${controller}');
+  Future getLote() async {
+    var res = await http.get(url + '$folio/$controller');
     var datos = json.decode(res.body);
     if (res != null) {
       setState(() {
@@ -33,11 +35,11 @@ class _IniciarPrepState extends State<IniciarPrep> {
     }
   }
 
-  /******************FUNCION UBICACIÓN DE PRODUCTO ESCANEADO**********************************/
+  //******************FUNCION UBICACIÓN DE PRODUCTO ESCANEADO**********************************/
 
   List ubicacionList;
   Future ubica() async {
-    final res = await http.get(url + 'ubica/${folio}/${controller}/');
+    final res = await http.get(url + 'ubica/$folio/$controller/');
     var datos = json.decode(res.body);
     if (res != null) {
       setState(() {
@@ -46,7 +48,7 @@ class _IniciarPrepState extends State<IniciarPrep> {
     }
   }
 
-  /******************METODO PARA SCAN Y ENVIO DE CONTROLER CON VALOR************************* */
+  ///******************METODO PARA SCAN Y ENVIO DE CONTROLER CON VALOR************************* */
 
   String _scanResult;
 
@@ -62,7 +64,7 @@ class _IniciarPrepState extends State<IniciarPrep> {
     });
   }
 
-/****************************************************************************/
+  ///****************************************************************************/
   List<InprepedModel> data;
   String folio;
   getPrep() {
@@ -80,7 +82,7 @@ class _IniciarPrepState extends State<IniciarPrep> {
     });
   }
 
-/***************************************************************************/
+  ///***************************************************************************/
   dynamic detalle;
   loadDataByCode(String code, BuildContext context) {
     print('loadDataByCode ===> ' + code);
@@ -113,7 +115,7 @@ class _IniciarPrepState extends State<IniciarPrep> {
     });
   }
 
-/**************************************************************************/
+  ///***************************************************************************/
   @override
   Widget build(BuildContext context) {
     getPrep();
@@ -217,11 +219,11 @@ class _IniciarPrepState extends State<IniciarPrep> {
                         //_seleccion = value;
                       });
                     },
-                    /*items: //dataLote.map((item) {
-                    return new DropdownMenuItem(
-                     child: Text(item['desPer']),
-                     value: item,
-                     );
+                    /* items: dataLote.map((item) {
+                      return new DropdownMenuItem(
+                        child: Text(item['desPer']),
+                        value: item,
+                      );
                     }).toList(),*/
                   ),
                 ),
