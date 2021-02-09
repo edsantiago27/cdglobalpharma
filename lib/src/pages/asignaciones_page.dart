@@ -1,8 +1,9 @@
-import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:cdglobalpharma/src/models/model_pedxasignar.dart';
 import 'package:cdglobalpharma/src/providers/provider_pedxasignar.dart';
-import 'package:charts_flutter/flutter.dart';
-import 'package:flutter/material.dart';
+import 'dart:convert';
+
+import 'finalAsignaOper_page.dart';
 
 class AsignarPedidoPage extends StatefulWidget {
   @override
@@ -12,6 +13,7 @@ class AsignarPedidoPage extends StatefulWidget {
 class _AsignarPedidoPageState extends State<AsignarPedidoPage> {
   String folio;
   List<ModelsPedidosxAsignar> data;
+  List<ModelsPedidosxAsignar> modelData;
 
   getPedidosxAsignar() {
     ProviderPedidosxAsignar.listaPedxAsignar().then((response) {
@@ -32,6 +34,17 @@ class _AsignarPedidoPageState extends State<AsignarPedidoPage> {
         title: Center(
           child: Text('Asignar Preparaciones'),
         ),
+        actions: [
+          IconButton(
+              icon: const Icon(Icons.check),
+              color: Colors.green,
+              onPressed: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (BuildContext context) {
+                  return new AsignarOperador();
+                }));
+              }),
+        ],
       ),
       body: data == null
           ? Center(child: CircularProgressIndicator())
@@ -44,6 +57,8 @@ class _AsignarPedidoPageState extends State<AsignarPedidoPage> {
       scrollDirection: Axis.horizontal, // OJO REVISAR AXIS.HORIZONTAL
       child: SingleChildScrollView(
         child: DataTable(
+          columnSpacing: 20.5,
+          showCheckboxColumn: true,
           columns: const <DataColumn>[
             DataColumn(
               label: Text('Folio'),
@@ -81,6 +96,10 @@ class _AsignarPedidoPageState extends State<AsignarPedidoPage> {
           rows: data
               .map(
                 (data) => DataRow(
+                  //selected: modelData.contains(data),
+                  onSelectChanged: (data) {
+                    //modelData = data;
+                  },
                   cells: <DataCell>[
                     DataCell(
                       Text(data.folio),

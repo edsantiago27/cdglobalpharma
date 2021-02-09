@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'checkout_pages.dart';
 import 'pedidos_page.dart';
+import 'package:http/http.dart' as http;
 
 class IniciarPrep extends StatefulWidget {
   // IniciarPrep({Key key}) : super(key: key);
@@ -17,21 +18,32 @@ class IniciarPrep extends StatefulWidget {
 }
 
 class _IniciarPrepState extends State<IniciarPrep> {
-  /******************************************************/
+  /***************************  METODO PARA LOTE***************************/
   String _seleccion;
-  List<InprepedModel> dataLote;
-  getLote() {
-    ProviderInpre.cargaLotes(widget.folio, controller.text).then((value) {
-      Iterable list = jsonDecode(value.body);
-      List<InprepedModel> inpreLote = List<InprepedModel>();
-      inpreLote = list.map((e) => InprepedModel.fromJson(e)).toList();
-      if (inpreLote != null) {
-        setState(() {
-          dataLote = inpreLote;
-        });
-      }
-      print(dataLote);
-    });
+  List dataLote;
+  var url = 'http://192.168.0.4:8182/api/inprepeds/';
+
+  Future<String> getLote() async {
+    var res = await http.get(url + '${folio}/${controller}');
+    var datos = json.decode(res.body);
+    if (res != null) {
+      setState(() {
+        dataLote = datos;
+      });
+    }
+  }
+
+  /******************FUNCION UBICACIÓN DE PRODUCTO ESCANEADO**********************************/
+
+  List ubicacionList;
+  Future ubica() async {
+    final res = await http.get(url + 'ubica/${folio}/${controller}/');
+    var datos = json.decode(res.body);
+    if (res != null) {
+      setState(() {
+        ubicacionList = datos;
+      });
+    }
   }
 
   /******************METODO PARA SCAN Y ENVIO DE CONTROLER CON VALOR************************* */
@@ -68,6 +80,7 @@ class _IniciarPrepState extends State<IniciarPrep> {
     });
   }
 
+/***************************************************************************/
   dynamic detalle;
   loadDataByCode(String code, BuildContext context) {
     print('loadDataByCode ===> ' + code);
@@ -100,10 +113,11 @@ class _IniciarPrepState extends State<IniciarPrep> {
     });
   }
 
+/**************************************************************************/
   @override
   Widget build(BuildContext context) {
     getPrep();
-    //getLote();
+
     return Scaffold(
       appBar: AppBar(
         title: Center(
@@ -146,6 +160,7 @@ class _IniciarPrepState extends State<IniciarPrep> {
                   maxLength: 15,
                   keyboardType: TextInputType.text,
                   onChanged: (value) {
+                    ubica();
                     getLote();
                     loadDataByCode(value, context);
                   },
@@ -161,7 +176,15 @@ class _IniciarPrepState extends State<IniciarPrep> {
                   height: 10,
                 ),
                 TextFormField(
+                  initialValue: '0',
                   maxLength: 5,
+                  onChanged: (value) {
+                    /*
+                        if (value == cantNV){
+                          actualiza procedure reserva
+                        }
+                         */
+                  }, // llamar metodo que actualiza cant_esc en inpreped y cant_NV
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
                       icon: Icon(
@@ -175,7 +198,6 @@ class _IniciarPrepState extends State<IniciarPrep> {
                   height: 5,
                 ),
                 TextFormField(
-                  //maxLength: 4,
                   enabled: false,
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
@@ -186,23 +208,21 @@ class _IniciarPrepState extends State<IniciarPrep> {
                       hintText: 'Ubicación...',
                       labelText: 'Ubicación:'),
                 ),
-                //CargaLotePicking(),
                 ListTile(
                   title: const Text('Lote Disponible:'),
                   trailing: DropdownButton(
-                    items: dataLote.map((item) {
-                      return DropdownMenuItem(
-                        child: Text(item.lote),
-                        value: item.lote.toString(),
-                      );
-                    }).toList(), //this._listadoMenuItems,
-                    onChanged: (newValue) {
+                    value: _seleccion,
+                    onChanged: (value) {
                       setState(() {
-                        _seleccion = newValue;
+                        //_seleccion = value;
                       });
                     },
-                    value: _seleccion,
-                    hint: const Text('Lote'),
+                    /*items: //dataLote.map((item) {
+                    return new DropdownMenuItem(
+                     child: Text(item['desPer']),
+                     value: item,
+                     );
+                    }).toList(),*/
                   ),
                 ),
                 RaisedButton.icon(
@@ -211,7 +231,19 @@ class _IniciarPrepState extends State<IniciarPrep> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(50.0)),
                   onPressed: () {
-                    print(data);
+                    /*
+                    se ejecutará lo siguiente:
+                    insert into INPREBKP folio,fecha,local,bodega,codigob,codmp,cantidad,coduni," & _
+                         "codunir,factorv,lote,ubicacion,vence,motivo,observacion,cant_guia,numped,costop," & _
+                          "linped,cant_ant,estado,estprep values ();
+
+                    delete datatable el item del codigo de barra..
+
+                    delete from INPREPED where Folio= folio and Cant_Guia=0      
+                          
+
+                    
+                     */
                   },
                   elevation: 4.0,
                   color: Colors.amber,
@@ -348,24 +380,7 @@ class _IniciarPrepState extends State<IniciarPrep> {
                       DataCell(
                         Text(data.codigob),
                         showEditIcon: true,
-                        onTap: () {
-                          // folio = data.folio.toString();
-                          // if (widget.folio == data.folio) {
-                          //   Navigator.of(context).push(MaterialPageRoute(
-                          //       builder: (BuildContext context) {
-                          //     return new IniciarPrep(widget.folio);
-                          //   }));
-                          // } else {
-                          //   showDialog(
-                          //       context: context,
-                          //       barrierDismissible: false,
-                          //       builder: (BuildContext context) {
-                          //         return AlertDialog(
-                          //           title: Text('Error'),
-                          //         );
-                          //       });
-                          // }
-                        },
+                        onTap: () {},
                       ),
 
                       DataCell(Text(data.cantNv.toString())),

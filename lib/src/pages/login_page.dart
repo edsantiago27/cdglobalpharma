@@ -1,6 +1,7 @@
 import 'package:cdglobalpharma/src/bloc/login_bloc.dart';
 import 'package:cdglobalpharma/src/providers/provider_login.dart';
 import 'package:cdglobalpharma/src/providers/provider_usuario.dart';
+import 'package:cdglobalpharma/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
@@ -208,7 +209,22 @@ class LoginPage extends StatelessWidget {
   }
 
   _login(BuildContext context, LoginBloc bloc) async {
-    //await UsuarioProvider.login(bloc.usuario, bloc.password);
-    Navigator.pushReplacementNamed(context, 'home');
+    final info = await UsuarioProvider.login(bloc.usuario, bloc.password);
+    if (info == null) {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('Información incorrecta'),
+              actions: <Widget>[
+                FlatButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: Text('Ok'))
+              ],
+            );
+          });
+    } else {
+      Navigator.pushReplacementNamed(context, 'home');
+    }
   }
 }

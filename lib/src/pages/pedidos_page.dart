@@ -1,8 +1,8 @@
+import 'package:flutter/material.dart';
+import 'package:cdglobalpharma/src/models/model_ped_asigna.dart';
 import 'package:cdglobalpharma/src/pages/preparacion_page.dart';
 import 'package:cdglobalpharma/src/providers/provider_pedidos.dart';
-import 'package:flutter/material.dart';
 import 'dart:convert';
-import 'package:cdglobalpharma/src/models/model_ped_asigna.dart';
 
 class PreparacionesPage extends StatefulWidget {
   //PreparacionesPage({Key key}) : super(key: key);

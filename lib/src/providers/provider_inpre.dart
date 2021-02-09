@@ -30,7 +30,7 @@ class ProviderInpre extends ChangeNotifier {
   // metodo para cargar las ubicaciones
 
   static Future cargaUbicacion(String folio) async {
-    var response = await http.get('http://192.168.0.4:8182/picking/ubicacion/');
+    var response = await http.get('http://192.168.0.4:8182/api/inprepeds/ubica/${folio}');
     // if (response == null) {
     //   return false;
     // }

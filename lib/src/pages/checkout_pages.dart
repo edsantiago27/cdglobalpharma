@@ -41,7 +41,20 @@ class _CheckoutPageState extends State<CheckoutPage> {
           IconButton(
             tooltip: 'Confirmar Preparación',
             icon: Icon(Icons.check),
-            onPressed: () {},
+            onPressed: () {
+              /*
+              se ejecutara lo siguiente:
+              con un Get se verificará si el folio se encuentra en la tabla inprebkp, la muestra.
+              el operador la revisará y verificará si los datos son correctos:
+             * ACTUALIZA_VEPEDET
+             * ACTUALIZA_RESERVA
+             * INSERT INTO INPREPED () VALUE () actualizando el estado a "Confirmado"
+             * DELETE FROM INPREBKP WHERE FOLIO = FOLIO
+             * delete from inpreped  where folio= folio and cant_guia = 0 y cantidad = 0
+             * 
+              
+               */
+            },
           )
         ],
       ),

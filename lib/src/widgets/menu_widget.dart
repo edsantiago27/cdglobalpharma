@@ -29,7 +29,7 @@ class Menu extends StatelessWidget {
             child: Column(
               children: [
                 new ListTile(
-                    leading: Icon(Icons.pages, color: Colors.black),
+                    leading: Icon(Icons.pages, color: Colors.grey),
                     title: Text(
                       'Home',
                       style: TextStyle(
@@ -51,7 +51,7 @@ class Menu extends StatelessWidget {
                   ),
                   leading: Icon(
                     Icons.face,
-                    color: Colors.white,
+                    color: Colors.grey,
                   ),
                   onTap: () {
                     Navigator.of(context).push(
@@ -68,7 +68,7 @@ class Menu extends StatelessWidget {
                   ),
                   leading: Icon(
                     Icons.fact_check,
-                    color: Colors.white,
+                    color: Colors.grey,
                   ),
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
@@ -85,7 +85,7 @@ class Menu extends StatelessWidget {
                   ),
                   leading: Icon(
                     Icons.check_box,
-                    color: Colors.white,
+                    color: Colors.grey,
                   ),
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
@@ -102,12 +102,31 @@ class Menu extends StatelessWidget {
                   ),
                   leading: Icon(
                     Icons.add_moderator,
-                    color: Colors.white,
+                    color: Colors.grey,
                   ),
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                           builder: (context) => AsignarPedidoPage()),
+                      //builder: (context) => PedidosAsignados()),
+                    );
+                  },
+                ),
+                new ListTile(
+                  title: Text(
+                    'Página de Test',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18.0),
+                  ),
+                  leading: Icon(
+                    Icons.add_moderator,
+                    color: Colors.grey,
+                  ),
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => TestPage()),
                       //builder: (context) => PedidosAsignados()),
                     );
                   },
@@ -122,11 +141,11 @@ class Menu extends StatelessWidget {
                   ),
                   leading: Icon(
                     Icons.settings,
-                    color: Colors.white,
+                    color: Colors.grey,
                   ),
                   onTap: () {
                     //Navigator.of(context).push(
-                    // MaterialPageRoute(builder: (context) => PedidosAsignados()));
+                    // MaterialPageRoute(builder: (context) => Configuración()));
                   },
                 ),
                 new ListTile(
@@ -139,7 +158,7 @@ class Menu extends StatelessWidget {
                   ),
                   leading: Icon(
                     Icons.close,
-                    color: Colors.white,
+                    color: Colors.redAccent,
                   ),
                   onTap: () {
                     SystemNavigator.pop();
