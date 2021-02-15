@@ -45,6 +45,7 @@ class Provider extends InheritedWidget {
   static Future<bool> editUser(LgpersonModel lgperson) async {
     final urledit = '$url/lgpersons/${lgperson.codPer}';
     final resp = await http.put(urledit, body: usersModelToJson(lgperson));
+    // ignore: unused_local_variable
     final decodeData = json.decode(resp.body);
     return true;
   }
@@ -61,6 +62,7 @@ class Provider extends InheritedWidget {
     final urleditpa = '$url/pedidosasignadoes/${pedidosAsignados.codPer}';
     final resp = await http.put(urleditpa,
         body: pedidosAsignadosModelToJson(pedidosAsignados));
+    // ignore: unused_local_variable
     final decodepaData = json.decode(resp.body);
     return true;
   }

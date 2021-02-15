@@ -1,7 +1,4 @@
-import 'dart:convert';
-
 import 'package:http/http.dart' as http;
-import 'package:cdglobalpharma/src/models/model_ped_asigna.dart';
 import 'package:flutter/material.dart';
 
 class ProviderPedidos extends ChangeNotifier {

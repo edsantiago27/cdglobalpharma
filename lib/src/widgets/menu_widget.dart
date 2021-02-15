@@ -4,14 +4,13 @@ import 'package:cdglobalpharma/src/pages/pedidos_page.dart';
 import 'package:cdglobalpharma/src/pages/picking_pages.dart';
 import 'package:cdglobalpharma/src/pages/test_page.dart';
 import 'package:cdglobalpharma/src/pages/user_page.dart';
-import 'package:cdglobalpharma/src/providers/provider_login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class Menu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final bloc = Provider.of(context);
+    //final bloc = Provider.of(context);
     return new Drawer(
       elevation: 16.0,
       child: ListView(

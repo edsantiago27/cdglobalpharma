@@ -46,18 +46,6 @@ class _PreparacionPageState extends State<PreparacionPage> {
     );
   }
 
-  Widget _headPrep(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: <Widget>[
-          Text('Preparación: '),
-          TextFormField(
-              //initialValue: pedidos.folio,
-              )
-        ],
-      ),
-    );
-  }
 
   Widget _detailPrep(BuildContext context) {
     return SingleChildScrollView(

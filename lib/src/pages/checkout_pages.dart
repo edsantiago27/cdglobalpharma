@@ -51,7 +51,11 @@ class _CheckoutPageState extends State<CheckoutPage> {
              * INSERT INTO INPREPED () VALUE () actualizando el estado a "Confirmado"
              * DELETE FROM INPREBKP WHERE FOLIO = FOLIO
              * delete from inpreped  where folio= folio and cant_guia = 0 y cantidad = 0
-             * 
+             
+             updateVepetedet(),
+             updateReserva(),
+             putInpreped(),
+             deleteInprebkp()
               
                */
             },

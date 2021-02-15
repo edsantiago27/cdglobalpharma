@@ -32,7 +32,6 @@ class _CargaLotePickingState extends State<CargaLotePicking> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getLote();
   }

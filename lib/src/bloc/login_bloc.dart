@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+
 import 'package:rxdart/rxdart.dart';
 
 import 'validator.dart';
@@ -6,7 +6,7 @@ import 'validator.dart';
 class LoginBloc with Validators {
   final _usuarioController = BehaviorSubject<String>();
   final _upassController = BehaviorSubject<String>();
-  final _codigoController = BehaviorSubject<String>();
+  //final _codigoController = BehaviorSubject<String>();
 
   // Recuperar datos del Stream
   Stream<String> get usuarioStream =>
@@ -23,7 +23,7 @@ class LoginBloc with Validators {
   // Obtener el ultimo valor ingresado a los streams
   String get usuario => _usuarioController.value;
   String get password => _upassController.value;
-  String get codigo => _codigoController.value;
+  //String get codigo => _codigoController.value;
 
   dispose() {
     _usuarioController?.close();

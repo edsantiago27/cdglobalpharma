@@ -1,7 +1,6 @@
 import 'package:cdglobalpharma/src/bloc/login_bloc.dart';
 import 'package:cdglobalpharma/src/providers/provider_login.dart';
 import 'package:cdglobalpharma/src/providers/provider_usuario.dart';
-import 'package:cdglobalpharma/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {

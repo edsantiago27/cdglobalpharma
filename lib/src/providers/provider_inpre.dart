@@ -1,4 +1,3 @@
-import 'package:cdglobalpharma/src/models/model_inpreped.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -30,7 +29,8 @@ class ProviderInpre extends ChangeNotifier {
   // metodo para cargar las ubicaciones
 
   static Future cargaUbicacion(String folio) async {
-    var response = await http.get('http://192.168.0.4:8182/api/inprepeds/ubica/${folio}');
+    var response =
+        await http.get('http://192.168.0.4:8182/api/inprepeds/ubica/$folio');
     // if (response == null) {
     //   return false;
     // }

@@ -1,6 +1,5 @@
 import 'dart:convert';
-import 'package:cdglobalpharma/src/models/model_lgperson.dart';
-import 'package:cdglobalpharma/src/models/model_ped_asigna.dart';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -12,6 +11,7 @@ class TestPage extends StatefulWidget {
 class _TestPageState extends State<TestPage> {
   String valores;
   List dataLgperson;
+  // ignore: missing_return
   Future<String> lgPerson() async {
     var res = await http.get('http://192.168.0.4:8182/api/lgpersons');
     var datos = json.decode(res.body);
