@@ -32,6 +32,7 @@ class _LoggerUserState extends State<LoggerUser> {
             children: [
               Text(
                 '${bloc.usuario}',
+                //'${info.usuario}',
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 28.0,

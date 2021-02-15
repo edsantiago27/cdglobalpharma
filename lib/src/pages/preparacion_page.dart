@@ -122,7 +122,7 @@ class _IniciarPrepState extends State<IniciarPrep> {
 
   @override
   Widget build(BuildContext context) {
-    getPrep();
+    getPrep(); //metodo que carga la preparación
 
     return Scaffold(
       appBar: AppBar(
@@ -135,7 +135,7 @@ class _IniciarPrepState extends State<IniciarPrep> {
               icon: const Icon(Icons.filter_center_focus),
               color: Colors.red,
               onPressed: () async {
-                _scanCode();
+                _scanCode(); // metodo que apertura la camara y escanea barra
               }),
         ],
       ),
@@ -166,9 +166,9 @@ class _IniciarPrepState extends State<IniciarPrep> {
                   maxLength: 15,
                   keyboardType: TextInputType.text,
                   onChanged: (value) {
+                    //loadDataByCode(value, context);
                     ubica();
                     getLote();
-                    loadDataByCode(value, context);
                   },
                   decoration: InputDecoration(
                       icon: Icon(
