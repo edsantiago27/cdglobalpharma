@@ -36,7 +36,10 @@ class _PreparacionesPageState extends State<PreparacionesPage> {
     getPed();
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text('Listado Picking',) ),
+        title: Center(
+            child: Text(
+          'Listado Picking',
+        )),
       ),
       body: data == null
           ? Center(child: CircularProgressIndicator())
@@ -53,7 +56,7 @@ class _PreparacionesPageState extends State<PreparacionesPage> {
               DataColumn(
                 numeric: false,
                 label: Text(
-                  'Folio', 
+                  'Folio',
                   style: TextStyle(fontStyle: FontStyle.italic),
                 ),
               ),

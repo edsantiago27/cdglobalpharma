@@ -24,3 +24,7 @@ void mostrarAlerta(BuildContext context, String mensaje) {
         );
       });
 }
+
+class UrlApi {
+  static var url = 'http://192.168.0.111:8183/api';
+}

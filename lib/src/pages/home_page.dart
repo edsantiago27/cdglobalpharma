@@ -1,8 +1,17 @@
+<<<<<<< HEAD
 import 'package:cdglobalpharma/src/widgets/graph_widget.dart';
+=======
+//import 'package:cdglobalpharma/src/models/model_ped_asigna.dart';
+//import 'package:cdglobalpharma/src/widgets/graph_widget.dart';
+>>>>>>> 3307f9f9496a670d8699769054fb01b8c54318d7
 import 'package:cdglobalpharma/src/widgets/infoUser_widget.dart';
 import 'package:cdglobalpharma/src/widgets/loggerUser_widget.dart';
 import 'package:cdglobalpharma/src/widgets/menu_widget.dart';
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
+=======
+//import 'package:cdglobalpharma/src/providers/provider_login.dart';
+>>>>>>> 3307f9f9496a670d8699769054fb01b8c54318d7
 import 'dart:ui';
 
 class HomePage extends StatelessWidget {
@@ -11,7 +20,11 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //PedidosAsignadosModel pedidosAsignadosModel;
+<<<<<<< HEAD
    //final bloc = Provider.of(context);
+=======
+    //final bloc = Provider.of(context);
+>>>>>>> 3307f9f9496a670d8699769054fb01b8c54318d7
 
     return Scaffold(
       backgroundColor: Colors.amberAccent,
@@ -29,6 +42,7 @@ class HomePage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(80.0),
                     color: Colors.redAccent[100].withOpacity(0.3)),
                 child: MaterialButton(
+                  onPressed: () => null,
                   child: Row(
                     children: <Widget>[
                       Icon(
