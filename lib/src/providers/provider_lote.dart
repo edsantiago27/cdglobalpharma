@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class ProviderLote extends ChangeNotifier {
-  static String url = 'http://192.168.0.111:8183/';
-  //static String url = 'http://192.168.0.4:8182/';
+  //static String url = 'http://192.168.0.111:8183/';
+  static String url = 'http://192.168.0.4:8182/';
   static final lotepUrl = '$url/picking';
 
   //METODO PARA VER PIKING/{FOLIO}

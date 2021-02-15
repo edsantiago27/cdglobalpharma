@@ -21,14 +21,12 @@ class _IniciarPrepState extends State<IniciarPrep> {
   //***************************  METODO PARA LOTE***************************/
   String _seleccion;
   List dataLote;
-  //var url = 'http://192.168.0.4:8182/api/inprepeds/';
-  var url = 'http://192.168.0.111:8183/api/inprepeds/';
-
+  var url = 'http://192.168.0.4:8182/api/inprepeds/';
+  //var url = 'http://192.168.0.111:8183/api/inprepeds/';
 
   //Future<String> getLote() async {
 
   Future getLote() async {
-
     var res = await http.get(url + '$folio/$controller');
     var datos = json.decode(res.body);
     if (res != null) {
@@ -51,10 +49,7 @@ class _IniciarPrepState extends State<IniciarPrep> {
     }
   }
 
-
-
   ///******************METODO PARA SCAN Y ENVIO DE CONTROLER CON VALOR************************* */
-
 
   String _scanResult;
 
@@ -69,8 +64,6 @@ class _IniciarPrepState extends State<IniciarPrep> {
       controller.text = _scanResult;
     });
   }
-
-
 
   ///****************************************************************************/
 
@@ -90,7 +83,6 @@ class _IniciarPrepState extends State<IniciarPrep> {
       }
     });
   }
-
 
   ///***************************************************************************/
 
@@ -125,7 +117,6 @@ class _IniciarPrepState extends State<IniciarPrep> {
       }
     });
   }
-
 
   ///***************************************************************************/
 
