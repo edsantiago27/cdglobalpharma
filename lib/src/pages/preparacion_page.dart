@@ -24,11 +24,11 @@ class _IniciarPrepState extends State<IniciarPrep> {
   //var url = 'http://192.168.0.4:8182/api/inprepeds/';
   var url = 'http://192.168.0.111:8183/api/inprepeds/';
 
-<<<<<<< HEAD
-  Future<String> getLote() async {
-=======
+
+  //Future<String> getLote() async {
+
   Future getLote() async {
->>>>>>> 3307f9f9496a670d8699769054fb01b8c54318d7
+
     var res = await http.get(url + '$folio/$controller');
     var datos = json.decode(res.body);
     if (res != null) {
@@ -51,11 +51,10 @@ class _IniciarPrepState extends State<IniciarPrep> {
     }
   }
 
-<<<<<<< HEAD
-  //******************METODO PARA SCAN Y ENVIO DE CONTROLER CON VALOR************************* */
-=======
+
+
   ///******************METODO PARA SCAN Y ENVIO DE CONTROLER CON VALOR************************* */
->>>>>>> 3307f9f9496a670d8699769054fb01b8c54318d7
+
 
   String _scanResult;
 
@@ -71,11 +70,10 @@ class _IniciarPrepState extends State<IniciarPrep> {
     });
   }
 
-<<<<<<< HEAD
-//****************************************************************************/
-=======
+
+
   ///****************************************************************************/
->>>>>>> 3307f9f9496a670d8699769054fb01b8c54318d7
+
   List<InprepedModel> data;
   String folio;
   getPrep() {
@@ -93,11 +91,9 @@ class _IniciarPrepState extends State<IniciarPrep> {
     });
   }
 
-<<<<<<< HEAD
-//***************************************************************************/
-=======
+
   ///***************************************************************************/
->>>>>>> 3307f9f9496a670d8699769054fb01b8c54318d7
+
   dynamic detalle;
   loadDataByCode(String code, BuildContext context) {
     print('loadDataByCode ===> ' + code);
@@ -130,11 +126,9 @@ class _IniciarPrepState extends State<IniciarPrep> {
     });
   }
 
-<<<<<<< HEAD
-//**************************************************************************/
-=======
+
   ///***************************************************************************/
->>>>>>> 3307f9f9496a670d8699769054fb01b8c54318d7
+
   @override
   Widget build(BuildContext context) {
     getPrep();
