@@ -21,8 +21,8 @@ class _IniciarPrepState extends State<IniciarPrep> {
   //***************************  METODO PARA LOTE***************************/
   String _seleccion;
   List dataLote;
-  var url = 'http://192.168.0.4:8182/api/inprepeds/';
-  //var url = 'http://192.168.0.111:8183/api/inprepeds/';
+  //var url = 'http://192.168.0.4:8182/api/inprepeds/';
+  var url = 'http://192.168.0.111:8183/api/inprepeds/';
 
   //Future<String> getLote() async {
 
@@ -166,7 +166,7 @@ class _IniciarPrepState extends State<IniciarPrep> {
                   maxLength: 15,
                   keyboardType: TextInputType.text,
                   onChanged: (value) {
-                    //loadDataByCode(value, context);
+                    loadDataByCode(value, context);
                     ubica();
                     getLote();
                   },

@@ -13,8 +13,8 @@ class _TestPageState extends State<TestPage> {
   List dataLgperson;
   // ignore: missing_return
   Future<String> lgPerson() async {
-    //var res = await http.get('http://192.168.0.111:8183/api/lgpersons');
-    var res = await http.get('http://192.168.0.4:8182/api/lgpersons');
+    var res = await http.get('http://192.168.0.111:8183/api/lgpersons');
+    //var res = await http.get('http://192.168.0.4:8182/api/lgpersons');
     var datos = json.decode(res.body);
     if (res != null) {
       setState(() {
