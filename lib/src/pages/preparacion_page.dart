@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'package:cdglobalpharma/src/models/model_inprebkp.dart';
 import 'package:cdglobalpharma/src/models/model_inpreped.dart';
 import 'package:cdglobalpharma/src/providers/provider_codb.dart';
 import 'package:cdglobalpharma/src/providers/provider_inpre.dart';
+import 'package:cdglobalpharma/src/providers/provider_inprebkp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'checkout_pages.dart';
@@ -19,7 +21,7 @@ class IniciarPrep extends StatefulWidget {
 
 class _IniciarPrepState extends State<IniciarPrep> {
   //***************************  METODO PARA LOTE***************************/
-  String _seleccion;
+  String _seleccion, lote;
   List dataLote;
   //var url = 'http://192.168.0.4:8182/api/inprepeds/';
   var url = 'http://192.168.0.111:8183/api/inprepeds/';
@@ -27,20 +29,21 @@ class _IniciarPrepState extends State<IniciarPrep> {
   //Future<String> getLote() async {
 
   Future getLote() async {
-    var res = await http.get(url + '$folio/$controller');
-    var datos = json.decode(res.body);
+    var res = await http.get(url + '$folio/$controllerEAN');
+    var lotes = json.decode(res.body);
     if (res != null) {
       setState(() {
-        dataLote = datos;
+        dataLote = lotes;
       });
     }
+    print(dataLote);
   }
 
   //******************FUNCION UBICACIÓN DE PRODUCTO ESCANEADO**********************************/
 
   List ubicacionList;
   Future ubica() async {
-    final res = await http.get(url + 'ubica/$folio/$controller/');
+    final res = await http.get(url + 'ubica/$folio/$controllerEAN/');
     var datos = json.decode(res.body);
     if (res != null) {
       setState(() {
@@ -53,7 +56,7 @@ class _IniciarPrepState extends State<IniciarPrep> {
 
   String _scanResult;
 
-  final TextEditingController controller = TextEditingController();
+  final TextEditingController controllerEAN = TextEditingController();
 
   Future<void> _scanCode() async {
     String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
@@ -61,7 +64,7 @@ class _IniciarPrepState extends State<IniciarPrep> {
 
     setState(() {
       _scanResult = barcodeScanRes;
-      controller.text = _scanResult;
+      controllerEAN.text = _scanResult;
     });
   }
 
@@ -85,7 +88,7 @@ class _IniciarPrepState extends State<IniciarPrep> {
   }
 
   ///***************************************************************************/
-
+/*
   dynamic detalle;
   loadDataByCode(String code, BuildContext context) {
     print('loadDataByCode ===> ' + code);
@@ -93,7 +96,7 @@ class _IniciarPrepState extends State<IniciarPrep> {
       print('se obtienen los datos en simacodList ===> ');
       if (value != null) {
         print('value is not null ===> ' + value.toString());
-        if (!value['existe']) {
+        if (value['existe']) {
           showDialog(
             context: context,
             builder: (BuildContext context) {
@@ -116,6 +119,27 @@ class _IniciarPrepState extends State<IniciarPrep> {
         }
       }
     });
+  }*/
+
+  loadDataByCode(String code, BuildContext context) async {
+    final info = await ProviderCodB.simacodList(code).then((value) {
+      print(value);
+
+      if (value != null) {
+        showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: Text('El Código no se encuentra'),
+                actions: <Widget>[
+                  TextButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: Text('Ok'))
+                ],
+              );
+            });
+      } else {}
+    });
   }
 
   ///***************************************************************************/
@@ -123,7 +147,7 @@ class _IniciarPrepState extends State<IniciarPrep> {
   @override
   Widget build(BuildContext context) {
     getPrep(); //metodo que carga la preparación
-
+    //getLote();
     return Scaffold(
       appBar: AppBar(
         title: Center(
@@ -162,13 +186,13 @@ class _IniciarPrepState extends State<IniciarPrep> {
                   enabled: true,
                   autofocus: true,
                   autocorrect: false,
-                  controller: controller,
+                  //controller: controllerEAN,
                   maxLength: 15,
                   keyboardType: TextInputType.text,
                   onChanged: (value) {
                     loadDataByCode(value, context);
-                    ubica();
-                    getLote();
+                    // ubica();
+                    // getLote();
                   },
                   decoration: InputDecoration(
                       icon: Icon(
@@ -207,51 +231,28 @@ class _IniciarPrepState extends State<IniciarPrep> {
                 TextFormField(
                   enabled: false,
                   keyboardType: TextInputType.text,
+                  onChanged: (value) {
+                    ubica();
+                  },
                   decoration: InputDecoration(
-                      icon: Icon(
-                        Icons.my_location,
-                        color: Colors.grey,
-                      ),
-                      hintText: 'Ubicación...',
-                      labelText: 'Ubicación:'),
+                    icon: Icon(
+                      Icons.my_location,
+                      color: Colors.grey,
+                    ),
+                    hintText: 'Ubicación...',
+                    labelText: 'Ubicación:',
+                  ),
                 ),
                 ListTile(
                   title: const Text('Lote Disponible:'),
-                  trailing: DropdownButton(
-                    value: _seleccion,
-                    onChanged: (value) {
-                      setState(() {
-                        //_seleccion = value;
-                      });
-                    },
-                    /* items: dataLote.map((item) {
-                      return new DropdownMenuItem(
-                        child: Text(item['desPer']),
-                        value: item,
-                      );
-                    }).toList(),*/
-                  ),
+                  trailing: _comboBox(),
                 ),
                 RaisedButton.icon(
                   padding:
                       EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(50.0)),
-                  onPressed: () {
-                    /*
-                    se ejecutará lo siguiente:
-                    insert into INPREBKP folio,fecha,local,bodega,codigob,codmp,cantidad,coduni," & _
-                         "codunir,factorv,lote,ubicacion,vence,motivo,observacion,cant_guia,numped,costop," & _
-                          "linped,cant_ant,estado,estprep values ();
-
-                    delete datatable el item del codigo de barra..
-
-                    delete from INPREPED where Folio= folio and Cant_Guia=0      
-                          
-
-                    
-                     */
-                  },
+                  onPressed: () {},
                   elevation: 4.0,
                   color: Colors.amber,
                   icon: Icon(Icons.check_circle),
@@ -350,7 +351,7 @@ class _IniciarPrepState extends State<IniciarPrep> {
               DataColumn(
                 numeric: false,
                 label: Text(
-                  'Código B',
+                  'Código',
                   style: TextStyle(fontStyle: FontStyle.italic),
                 ),
               ),
@@ -385,7 +386,7 @@ class _IniciarPrepState extends State<IniciarPrep> {
                     //onSelectChanged: (data) => pedidos,
                     cells: <DataCell>[
                       DataCell(
-                        Text(data.codigob),
+                        Text(data.codmp),
                         showEditIcon: true,
                         onTap: () {},
                       ),
@@ -402,5 +403,25 @@ class _IniciarPrepState extends State<IniciarPrep> {
                 .toList(),
           ),
         ));
+  }
+
+  Widget _comboBox() {
+    if (controllerEAN.text != '') {
+      return DropdownButton(
+        value: _seleccion,
+        onChanged: (value) {
+          //getLote();
+          setState(() {
+            _seleccion = value;
+          });
+        },
+        items: dataLote.map((item) {
+          return new DropdownMenuItem(
+            child: Text(item['Lotes']),
+            value: item,
+          );
+        }).toList(),
+      );
+    }
   }
 }

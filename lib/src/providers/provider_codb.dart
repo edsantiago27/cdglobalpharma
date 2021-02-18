@@ -9,8 +9,8 @@ class ProviderCodB extends ChangeNotifier {
   static final codburl = '$url/simacodbs/';
 
   //METODO GET INPREPED
-  static Future simacodList(String code) async {
-    var response = await http.get(codburl + '$code');
+  static Future simacodList(String codigob) async {
+    var response = await http.get(codburl + '$codigob');
     //{'existe': true};
     //return await http.get(url);
     return response;
