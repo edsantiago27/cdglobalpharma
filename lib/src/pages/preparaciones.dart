@@ -46,7 +46,6 @@ class _PreparacionPageState extends State<PreparacionPage> {
     );
   }
 
-
   Widget _detailPrep(BuildContext context) {
     return SingleChildScrollView(
         scrollDirection: Axis.horizontal,
@@ -56,7 +55,14 @@ class _PreparacionPageState extends State<PreparacionPage> {
               DataColumn(
                 numeric: false,
                 label: Text(
-                  'Cod EAN',
+                  'Cod',
+                  style: TextStyle(fontStyle: FontStyle.italic),
+                ),
+              ),
+              DataColumn(
+                numeric: false,
+                label: Text(
+                  'Status',
                   style: TextStyle(fontStyle: FontStyle.italic),
                 ),
               ),
@@ -90,7 +96,8 @@ class _PreparacionPageState extends State<PreparacionPage> {
                   (data) => DataRow(
                     //onSelectChanged: (data) => pedidos,
                     cells: <DataCell>[
-                      DataCell(Text(data.codigob)),
+                      DataCell(Text(data.codmp)),
+                      DataCell(Text(data.status)),
                       DataCell(Text(data.bodega)),
                       DataCell(Text(data.numPed)),
                       DataCell(Text(data.codmp)),
