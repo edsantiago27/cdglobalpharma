@@ -54,6 +54,7 @@ class HomePage extends StatelessWidget {
       ),
       drawer: Menu(),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           LoggerUser(),
           InfoUserHome(),

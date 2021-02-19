@@ -13,8 +13,8 @@ class _TestPageState extends State<TestPage> {
   List dataLgperson;
   // ignore: missing_return
   Future<String> lgPerson() async {
-    var res = await http.get('http://192.168.0.111:8183/api/lgpersons');
-    //var res = await http.get('http://192.168.0.4:8182/api/lgpersons');
+    //var res = await http.get('http://192.168.0.111:8183/api/lgpersons');
+    var res = await http.get('http://192.168.0.8:8182/api/lgpersons');
     var datos = json.decode(res.body);
     if (res != null) {
       setState(() {
@@ -55,7 +55,7 @@ class _PedidosAsignadosState extends State<PedidosAsignados> {
   List<PedidosAsignadosModel> data = List<PedidosAsignadosModel>();
 
   Future<List<PedidosAsignadosModel>> tomar_pedido() async {
-    var url = 'http://192.168.0.4:8182/api/pedidosasignadoes';
+    var url = 'http://192.168.0.8:8182/api/pedidosasignadoes';
     var registros = List<PedidosAsignadosModel>();
     var response = await http.get(url).timeout(Duration(seconds: 90));
     if (response.statusCode == 200) {

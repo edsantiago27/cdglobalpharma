@@ -15,8 +15,8 @@ class _ListPickingPageState extends State<ListPickingPage> {
   List<PickingModel> data = List<PickingModel>();
 
   Future<List<PickingModel>> verPiking() async {
-    // var url = 'http://192.168.0.4:8182/api/pickings';
-    var url = 'http://192.168.0.111:8183/api/pickings';
+    var url = 'http://192.168.0.8:8182/api/pickings';
+    //var url = 'http://192.168.0.111:8183/api/pickings';
     var registros = List<PickingModel>();
     var response = await http.get(url).timeout(Duration(seconds: 90));
     if (response.statusCode == 200) {

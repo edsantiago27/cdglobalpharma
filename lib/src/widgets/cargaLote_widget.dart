@@ -20,8 +20,8 @@ class _CargaLotePickingState extends State<CargaLotePicking> {
   List<InprepedModel> dataLote;
   List itemLote = List();
   Future getLote() async {
-    //var url = 'http://192.168.0.4:8182/picking/$folio';
-    var url = 'http://192.168.0.111:8183/picking/$folio';
+    var url = 'http://192.168.0.8:8182/picking/$folio';
+    //var url = 'http://192.168.0.111:8183/picking/$folio';
     var response = await http.get(url);
     if (response.statusCode == 200) {
       var jsonData = jsonDecode(response.body);

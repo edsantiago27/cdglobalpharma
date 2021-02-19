@@ -5,6 +5,7 @@ import 'package:cdglobalpharma/src/providers/provider_inprebkp.dart';
 
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class CheckoutPage extends StatefulWidget {
   String folio;
   CheckoutPage(this.folio);

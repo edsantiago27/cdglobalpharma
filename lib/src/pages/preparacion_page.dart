@@ -1,9 +1,9 @@
 import 'dart:convert';
-import 'package:cdglobalpharma/src/models/model_inprebkp.dart';
+
 import 'package:cdglobalpharma/src/models/model_inpreped.dart';
-import 'package:cdglobalpharma/src/providers/provider_codb.dart';
+
 import 'package:cdglobalpharma/src/providers/provider_inpre.dart';
-import 'package:cdglobalpharma/src/providers/provider_inprebkp.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'checkout_pages.dart';
@@ -23,13 +23,14 @@ class _IniciarPrepState extends State<IniciarPrep> {
   //***************************  METODO PARA LOTE***************************/
   String _seleccion, lote;
   List dataLote;
-  //var url = 'http://192.168.0.4:8182/api/inprepeds/';
-  var url = 'http://192.168.0.111:8183/api/inprepeds/';
+  //var urlBase = 'http://192.168.0.8:8182/api/';
+  var urlInpreped = 'http://192.168.0.8:8182/api/inprepeds/';
+  //var urlInpreped = 'http://192.168.0.111:8183/api/inprepeds/';
 
   //Future<String> getLote() async {
 
   Future getLote() async {
-    var res = await http.get(url + '$folio/$controllerEAN');
+    var res = await http.get(urlInpreped + '$folio/$controllerEAN');
     var lotes = json.decode(res.body);
     if (res != null) {
       setState(() {
@@ -43,7 +44,7 @@ class _IniciarPrepState extends State<IniciarPrep> {
 
   List ubicacionList;
   Future ubica() async {
-    final res = await http.get(url + 'ubica/$folio/$controllerEAN/');
+    final res = await http.get(urlInpreped + 'ubica/$folio/$controllerEAN/');
     var datos = json.decode(res.body);
     if (res != null) {
       setState(() {
@@ -120,7 +121,30 @@ class _IniciarPrepState extends State<IniciarPrep> {
       }
     });
   }*/
-
+  String codigo;
+  List dataCodigo;
+  var urlSimacodb = 'http://192.168.0.8:8182/api/simacodbs/buscar/';
+  Future buscaCodigo() async {
+    final res = await http.get(urlSimacodb + '$controllerEAN');
+    final code = jsonDecode(res.body);
+    if (res == null) {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('El Código no se encuentra'),
+              actions: <Widget>[
+                TextButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: Text('Ok'))
+              ],
+            );
+          });
+    } else {
+      print(code);
+    }
+  }
+/*
   loadDataByCode(String code, BuildContext context) async {
     final info = await ProviderCodB.simacodList(code).then((value) {
       print(value);
@@ -140,7 +164,7 @@ class _IniciarPrepState extends State<IniciarPrep> {
             });
       } else {}
     });
-  }
+  }*/
 
   ///***************************************************************************/
 
@@ -190,7 +214,7 @@ class _IniciarPrepState extends State<IniciarPrep> {
                   maxLength: 15,
                   keyboardType: TextInputType.text,
                   onChanged: (value) {
-                    loadDataByCode(value, context);
+                    buscaCodigo();
                     // ubica();
                     // getLote();
                   },

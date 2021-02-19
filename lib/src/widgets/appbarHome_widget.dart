@@ -19,6 +19,7 @@ class AppBarHom extends StatelessWidget {
                   borderRadius: BorderRadius.circular(80.0),
                   color: Colors.redAccent[100].withOpacity(0.3)),
               child: MaterialButton(
+                onPressed: () {},
                 child: Row(
                   children: <Widget>[
                     Icon(
