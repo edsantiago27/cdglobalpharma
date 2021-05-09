@@ -9,6 +9,7 @@ import 'pages/splashscreen.dart';
 import 'pages/user_detail_page.dart';
 import 'providers/provider_login.dart';
 
+// ignore: must_be_immutable
 class MyApp extends StatelessWidget {
   String folio;
 

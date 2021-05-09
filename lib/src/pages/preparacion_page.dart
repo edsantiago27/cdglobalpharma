@@ -10,6 +10,7 @@ import 'checkout_pages.dart';
 import 'pedidos_page.dart';
 import 'package:http/http.dart' as http;
 
+// ignore: must_be_immutable
 class IniciarPrep extends StatefulWidget {
   // IniciarPrep({Key key}) : super(key: key);
   String folio;
@@ -43,8 +44,8 @@ class _IniciarPrepState extends State<IniciarPrep> {
   //******************FUNCION UBICACIÓN DE PRODUCTO ESCANEADO**********************************/
 
   List ubicacionList;
-  Future ubica() async {
-    final res = await http.get(urlInpreped + 'ubica/$folio/$controllerEAN/');
+  Future ubica(String folu, String codbu) async {
+    final res = await http.get(urlInpreped + 'ubica/$folu/$codbu/');
     var datos = json.decode(res.body);
     if (res != null) {
       setState(() {
@@ -73,7 +74,7 @@ class _IniciarPrepState extends State<IniciarPrep> {
 
   List<InprepedModel> data;
   String folio;
-  getPrep() {
+  getPrep() async {
     ProviderInpre.inpreParam(widget.folio).then((value) {
       //print(jsonDecode(value.body));
       Iterable list = jsonDecode(value.body);
@@ -124,15 +125,16 @@ class _IniciarPrepState extends State<IniciarPrep> {
   String codigo;
   List dataCodigo;
   var urlSimacodb = 'http://192.168.0.8:8182/api/simacodbs/buscar/';
-  Future buscaCodigo() async {
-    final res = await http.get(urlSimacodb + '$controllerEAN');
+  Future buscaCodigo(String value) async {
+    final res = await http.get(urlSimacodb + '$value');
     final code = jsonDecode(res.body);
+    print(value);
     if (res == null) {
       showDialog(
           context: context,
           builder: (context) {
             return AlertDialog(
-              title: Text('El Código no se encuentra'),
+              title: Text('El Código no se encuentra en la BD'),
               actions: <Widget>[
                 TextButton(
                     onPressed: () => Navigator.of(context).pop(),
@@ -144,27 +146,6 @@ class _IniciarPrepState extends State<IniciarPrep> {
       print(code);
     }
   }
-/*
-  loadDataByCode(String code, BuildContext context) async {
-    final info = await ProviderCodB.simacodList(code).then((value) {
-      print(value);
-
-      if (value != null) {
-        showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                title: Text('El Código no se encuentra'),
-                actions: <Widget>[
-                  TextButton(
-                      onPressed: () => Navigator.of(context).pop(),
-                      child: Text('Ok'))
-                ],
-              );
-            });
-      } else {}
-    });
-  }*/
 
   ///***************************************************************************/
 
@@ -207,14 +188,14 @@ class _IniciarPrepState extends State<IniciarPrep> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 TextFormField(
-                  enabled: true,
-                  autofocus: true,
-                  autocorrect: false,
+                  //enabled: true,
+                  //autofocus: true,
+                  //autocorrect: false,
                   //controller: controllerEAN,
-                  maxLength: 15,
+                  maxLength: 13,
                   keyboardType: TextInputType.text,
                   onChanged: (value) {
-                    buscaCodigo();
+                    buscaCodigo(value);
                     // ubica();
                     // getLote();
                   },
@@ -256,7 +237,7 @@ class _IniciarPrepState extends State<IniciarPrep> {
                   enabled: false,
                   keyboardType: TextInputType.text,
                   onChanged: (value) {
-                    ubica();
+                    ubica(widget.folio, controllerEAN.text);
                   },
                   decoration: InputDecoration(
                     icon: Icon(
@@ -429,6 +410,7 @@ class _IniciarPrepState extends State<IniciarPrep> {
         ));
   }
 
+  // ignore: missing_return
   Widget _comboBox() {
     if (controllerEAN.text != '') {
       return DropdownButton(

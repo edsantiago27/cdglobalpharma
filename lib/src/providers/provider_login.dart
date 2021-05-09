@@ -7,6 +7,7 @@ import 'package:cdglobalpharma/src/models/model_ped_asigna.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+// ignore: must_be_immutable
 class Provider extends InheritedWidget {
   //static String url = 'http://192.168.0.111:8183';
   static String url = 'http://192.168.0.8:8182/api';

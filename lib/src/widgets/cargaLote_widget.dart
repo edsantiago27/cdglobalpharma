@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:cdglobalpharma/src/models/model_inpreped.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class CargaLotePicking extends StatefulWidget {
   //CargaLotePicking({Key key}) : super(key: key);
   String folio = '0000692172';
